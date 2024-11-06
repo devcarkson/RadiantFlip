@@ -1,0 +1,216 @@
+{% extends "base1.html" %}
+{% block title %}Sign Up | Radiant Flip{% endblock title %}
+{% load static %}
+{% block content %}
+		<section class="sign">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 offset-lg-3">
+
+						<script language=javascript>
+							function checkform() {
+								if (document.regform.fullname.value == '') {
+									alert("Please enter your full name!");
+									document.regform.fullname.focus();
+									return false;
+								}
+
+
+								if (document.regform.username.value == '') {
+									alert("Please enter your username!");
+									document.regform.username.focus();
+									return false;
+								}
+								if (!document.regform.username.value.match(/^[A-Za-z0-9_\-]+$/)) {
+									alert("For username you should use English letters and digits only!");
+									document.regform.username.focus();
+									return false;
+								}
+								if (document.regform.password.value == '') {
+									alert("Please enter your password!");
+									document.regform.password.focus();
+									return false;
+								}
+								if (document.regform.password.value != document.regform.password2.value) {
+									alert("Please check your password!");
+									document.regform.password2.focus();
+									return false;
+								}
+
+
+								if (document.regform.email.value == '') {
+									alert("Please enter your e-mail address!");
+									document.regform.email.focus();
+									return false;
+								}
+								if (document.regform.email.value != document.regform.email1.value) {
+									alert("Please retype your e-mail!");
+									document.regform.email.focus();
+									return false;
+								}
+
+								for (i in document.regform.elements) {
+									f = document.regform.elements[i];
+									if (f.name && f.name.match(/^pay_account/)) {
+										if (f.value == '') continue;
+										var notice = f.getAttribute('data-validate-notice');
+										var invalid = 0;
+										if (f.getAttribute('data-validate') == 'regexp') {
+											var re = new RegExp(f.getAttribute('data-validate-regexp'));
+											if (!f.value.match(re)) {
+												invalid = 1;
+											}
+										} else if (f.getAttribute('data-validate') == 'email') {
+											var re = /^[^\@]+\@[^\@]+\.\w{2,4}$/;
+											if (!f.value.match(re)) {
+												invalid = 1;
+											}
+										}
+										if (invalid) {
+											alert('Invalid account format. Expected ' + notice);
+											f.focus();
+											return false;
+										}
+									}
+								}
+
+								if (document.regform.agree.checked == false) {
+									alert("You have to agree with the Terms and Conditions!");
+									return false;
+								}
+
+								return true;
+							}
+
+							function IsNumeric(sText) {
+								var ValidChars = "0123456789";
+								var IsNumber = true;
+								var Char;
+								if (sText == '') return false;
+								for (i = 0; i < sText.length && IsNumber == true; i++) {
+									Char = sText.charAt(i);
+									if (ValidChars.indexOf(Char) == -1) {
+										IsNumber = false;
+									}
+								}
+								return IsNumber;
+							}
+						</script>
+						<!--Messages Notifcation-->
+						<style>
+							.alert-custom {
+								background-color: #068DB4;
+								color: white;
+							}
+						</style>
+						
+						<!-- Message Alert -->
+						<div class="alert-container" style="z-index:1">
+							{% if messages %}
+								{% for message in messages %}
+									<div class="alert alert-warning alert-custom alert-dismissible fade show alert-timeout" role="alert">
+										<strong>Hello!</strong> {{ message }}.
+									</div>
+								{% endfor %}
+							{% endif %}
+						</div>
+						
+						<script>
+							// Hide alert messages after 6 seconds
+							setTimeout(function() {
+								var alerts = document.querySelectorAll('.alert-timeout');
+								alerts.forEach(function(alert) {
+									alert.style.display = 'none';
+								});
+							}, 6000);
+						</script>
+						
+
+
+
+
+						<form method="post" action="{% url 'signup' %}">
+							{% csrf_token %}
+							<input type="hidden" name="form_id" value="17277411111944">
+							<input type="hidden" name="form_token" value="e707b6bbced6de42f5d75e7a1b8ec93d">
+							<input type="hidden" name="a" value="signup">
+							<input type="hidden" name="action" value="signup">
+						
+							<table cellspacing="0" cellpadding="2" border="0">
+								<div class="sign-box">
+									<div class="sign-title">
+										Sign UP
+										<p>Create an account</p>
+									</div>
+						
+									<div class="contacts-form__inputs">
+										<label class="contacts-form__input contacts-form__input_icon">
+											<input type="text" name="fullname" class="inpts" size="30" placeholder="Full Name" required>
+											<svg>
+												<use xlink:href="{% static 'img/sprite.svg#user' %}"></use>
+											</svg>
+										</label>
+						
+										<label class="contacts-form__input contacts-form__input_icon">
+											<input type="text" name="username" class="inpts" size="30" placeholder="Username" required>
+											<svg>
+												<use xlink:href="{% static 'img/sprite.svg#user' %}"></use>
+											</svg>
+										</label>
+						
+										<label class="contacts-form__input contacts-form__input_icon">
+											<input type="text" name="phone" class="inpts" size="30" placeholder="Phone Number" required>
+											<svg>
+												<use xlink:href="{% static 'img/sprite.svg#user' %}"></use>
+											</svg>
+										</label>
+						
+										<label class="contacts-form__input contacts-form__input_icon">
+											<input type="text" name="country" class="inpts" size="30" placeholder="Country" required>
+											<svg>
+												<use xlink:href="{% static 'img/sprite.svg#user' %}"></use>
+											</svg>
+										</label>
+						
+										<label class="contacts-form__input contacts-form__input_icon">
+											<input type="email" name="email" class="inpts" size="30" placeholder="E-mail Address" required>
+											<svg>
+												<use xlink:href="{% static 'img/sprite.svg#mail' %}"></use>
+											</svg>
+										</label>
+						
+										<label class="contacts-form__input contacts-form__input_icon">
+											<input type="password" name="password1" class="inpts" size="30" placeholder="Enter Password" required>
+											<svg>
+												<use xlink:href="{% static 'img/sprite.svg#pass' %}"></use>
+											</svg>
+										</label>
+						
+										<label class="contacts-form__input contacts-form__input_icon">
+											<input type="password" name="password2" class="inpts" size="30" placeholder="Confirm Password" required>
+											<svg>
+												<use xlink:href="{% static 'img/sprite.svg#pass' %}"></use>
+											</svg>
+										</label>
+									</div>
+						
+									<div class="sign-sponsor">Your Upline:<span>N/A (n/a)</span></div>
+						
+									<label class="sign-check mt-4">
+										<input type="checkbox" name="agree" value="1" required>
+										<span> I agree with <a style="color: antiquewhite; text-decoration:none" href="{% url 'terms' %}">Terms and conditions</a></span>
+									</label>
+						
+									<button type="submit" value="Register" class="main-btn main-btn_orange main-btn_m" style="width:100%">Sign UP</button>
+									
+									<div class="sign-bot">Already have an account?<a href="{% url 'login' %}"> Sign In</a></div>
+								</div>
+							</table>
+						</form>						
+						
+					</div>
+				</div>
+			</div>
+
+		</section>
+{% endblock %}

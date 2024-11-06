@@ -1,0 +1,64 @@
+{% extends "dashnav.html" %}
+{% block title %}Dashboard | Radiant Flip{% endblock title %}
+{% load static %}
+{% block content %}
+<main id="as-main-my-deposit" class="uk-section-xsmall">
+    <div class="uk-container uk-container-expand">
+
+        <header class="uk-heading uk-text-center uk-margin-small-bottom">
+            <h1 class="uk-heading-line">Security Settings</h1>
+        </header>
+
+
+        <div>
+            <div class="uk-card uk-card-default uk-margin-top">
+                <div class="as-card-no-ticket">
+                    <figure>
+                        <div class="table-responsive">
+                            <form method="post" action="{% url 'security' %}">
+                                {% csrf_token %}
+                                <label>Detect IP Address Change Sensitivity</label><br>
+                                <input type="radio" name="ip" value="disabled" checked>Disabled<br>
+                                <input type="radio" name="ip" value="medium">Medium<br>
+                                <input type="radio" name="ip" value="high">High<br>
+                                <input type="radio" name="ip" value="always">Paranoid<br><br>
+        
+                                <label>Detect Browser Change</label><br>
+                                <input type="radio" name="browser" value="disabled" checked>Disabled<br>
+                                <input type="radio" name="browser" value="enabled">Enabled<br><br>
+        
+                                <input type="submit" value="Set" class="uk-button uk-button-primary uk-button-large">
+                            </form>
+        
+                            <h3>Two Factor Authentication</h3>
+                            <form method="post" name="mainform">
+                                {% csrf_token %}
+                                <label>1. Install <a href="http://m.google.com/authenticator" target="_blank">Google Authenticator</a> on your mobile device.</label><br>
+                                <label style="font-size:15px">2. Your Secret Code is: <b>{{ tfa_secret }}</b></label><br>
+                                <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code" /><br>
+                                <label>3. Please enter the two-factor token from Google Authenticator to verify correct setup:</label><br>
+                                <input type="text" name="code" class="uk-input uk-text-emphasis form-control" required> 
+                                <input type="submit" value="Enable" class="uk-button uk-button-primary uk-button-large" onclick="return checkform();">
+                            </form>
+                        </div>
+        
+                        <script language="javascript">
+                            function checkform() {
+                                const codeInput = document.mainform.code.value;
+                                if (!codeInput.match(/^[0-9]{6}$/)) {
+                                    alert("Please type a valid 6-digit code!");
+                                    document.mainform.code.focus();
+                                    return false;
+                                }
+                                return true;
+                            }
+                        </script>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</main>
+{% endblock %}

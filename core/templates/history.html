@@ -1,0 +1,177 @@
+{% extends "dashnav.html" %}
+{% load humanize %}
+{% load custom_filters %}
+{% block title %}Dashboard | Radiant Flip{% endblock title %}
+{% load static %}
+{% block content %}
+<main id="as-main-my-deposit" class="uk-section-xsmall">
+   
+    <div class="uk-container uk-container-expand">
+        <!-- Transactions Type Section -->
+        <figure id="as-transactions-type" class="uk-width-1-4@xl uk-flex-last@xl">
+            <div class="uk-cube-bottom-left">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <header class="uk-heading uk-text-center">
+                        <h2 class="uk-h3">Transactions Type</h2>
+                    </header>
+                    <br>
+    
+                    <!-- Transactions filter form -->
+                    <table cellspacing="0" cellpadding="0" border="0" width="100%" class="my_accont">
+                        <tr>
+                            <form method="get" name="opts">
+                                {% csrf_token %}
+                                <td>
+                                    <!-- Transaction Type Dropdown -->
+                                    <select name="type" class="uk-input uk-text-emphasis form-control" onchange="document.opts.submit();">
+                                        <option value="all" {% if transaction_type == "all" %}selected{% endif %}>All transactions</option>
+                                        <option value="Deposit" {% if transaction_type == "Deposit" %}selected{% endif %}>Deposit</option>
+                                        <option value="Withdrawal" {% if transaction_type == "Withdrawal" %}selected{% endif %}>Withdrawal</option>
+                                        <option value="Stake" {% if transaction_type == "Stake" %}selected{% endif %}>Stake</option> <!-- Added Stake option -->
+                                        <!--<option value="earning" {% if transaction_type == "earning" %}selected{% endif %}>Earning</option>-->
+                                        <!--<option value="commissions" {% if transaction_type == "commissions" %}selected{% endif %}>Referral commission</option>-->
+                                    </select>
+                                    <br>
+                                    <img src="images/q.gif" width="1" height="4">
+                                    <br>
+
+    
+                                    <!-- eCurrency Dropdown -->
+                                    <select name="ec" class="uk-input uk-text-emphasis form-control">
+                                        <option value="all" {% if ecurrency == "all" %}selected{% endif %}>All eCurrencies</option>
+                                        <option value="Bitcoin" {% if ecurrency == "Bitcoin" %}selected{% endif %}>Bitcoin</option>
+                                        <option value="Litecoin" {% if ecurrency == "Litecoin" %}selected{% endif %}>Litecoin</option>
+                                        <option value="Ethereum" {% if ecurrency == "Ethereum" %}selected{% endif %}>Ethereum</option>
+                                    </select>
+                                </td>
+                                <td align="right">
+                                    <!-- Date Range Filters -->
+                                    From:
+                                    <!-- Month Dropdown -->
+                                    <select name="month_from" class="uk-input uk-text-emphasis form-control p1">
+                                        {% for month_number, month_name in months %}
+                                            <option value="{{ month_number }}" {% if month_number == from_date.month %}selected{% endif %}>
+                                                {{ month_name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>&nbsp;
+                                
+                                    <!-- Day Dropdown -->
+                                    <select name="day_from" class="uk-input uk-text-emphasis form-control p1">
+                                        {% for day in days %}
+                                            <option value="{{ day }}" {% if day == from_date.day %}selected{% endif %}>{{ day }}</option>
+                                        {% endfor %}
+                                    </select>&nbsp;
+                                
+                                    <!-- Year Dropdown -->
+                                    <select name="year_from" class="uk-input uk-text-emphasis form-control p1">
+                                        {% for year in years %}
+                                            <option value="{{ year }}" {% if year == from_date.year %}selected{% endif %}>{{ year }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <br>
+                                    To:
+                                    <!-- Month Dropdown -->
+                                    <select name="month_to" class="uk-input uk-text-emphasis form-control p1">
+                                        {% for month_number, month_name in months %}
+                                            <option value="{{ month_number }}" {% if month_number == to_date.month %}selected{% endif %}>
+                                                {{ month_name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>&nbsp;
+                                
+                                    <!-- Day Dropdown -->
+                                    <select name="day_to" class="uk-input uk-text-emphasis form-control p1">
+                                        {% for day in days %}
+                                            <option value="{{ day }}" {% if day == to_date.day %}selected{% endif %}>{{ day }}</option>
+                                        {% endfor %}
+                                    </select>&nbsp;
+                                
+                                    <!-- Year Dropdown -->
+                                    <select name="year_to" class="uk-input uk-text-emphasis form-control p1">
+                                        {% for year in years %}
+                                            <option value="{{ year }}" {% if year == to_date.year %}selected{% endif %}>{{ year }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                
+                                <td>&nbsp;
+                                    <input type="submit" value="Go" class="uk-button uk-button-primary uk-button-large">
+                                </td>
+                            </form>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </figure>
+    </div>
+    
+    <br><br>
+    <header class="uk-heading uk-text-center uk-margin-small-bottom">
+        <h1 class="uk-heading-line">Transactions List</h1>
+    </header>
+    
+    <div>
+        <div class="uk-card uk-card-default uk-margin-top">
+            <div class="as-card-no-ticket">
+                <figure>
+                    <div class="table-responsive">
+                        <table cellspacing="1" cellpadding="2" border="0" width="100%" class="table table-striped table-bordered">
+                            <tr>
+                                <th class="inheader"><b>Type</b></th>
+                                <th class="inheader" width="200"><b>Amount</b></th>
+                                <th class="inheader" width="170"><b>Date</b></th>
+                            </tr>
+                            {% if transactions %}
+                                {% for transaction in transactions %}
+                                    <tr>
+                                        <td>
+                                            {{ transaction.type }} 
+                                            {% if transaction.type == "Stake" %}
+                                                {% comment %} (Plan: {{ transaction.plan }}) {% endcomment %}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ transaction.amount|floatformat:2|intcomma }}</td>
+                                        <td>{{ transaction.date|date:"M d, Y H:i:s" }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3" class="uk-text-center">No transactions available</td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                        
+                    </div>
+                </figure>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+</main>
+
+<style>
+    .my_accont .p1 {
+        width: 27%;
+        display: inline-block;
+    }
+
+    @media screen and (max-width: 767px) {
+        .my_accont td {
+            width: 100%;
+            display: block;
+        }
+
+        .my_accont .p1 {
+            width: 100%;
+            display: block;
+        }
+    }
+</style>
+
+{% endblock %}

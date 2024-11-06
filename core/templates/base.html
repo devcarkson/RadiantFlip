@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Add your common CSS and other head elements here -->
+    <link rel="shortcut icon" href="{% static "img/fav.png" %}">
+    
+    <!-- Other CSS files -->
+</head>
+
+<body>
+    <!-- Navbar -->
+
+    <div>
+        {% block header %}{% endblock header %}
+    </div>
+    
+    
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+
+
+
+    <!--footer-->
+
+    
+
+    <!-- Js files -->
+
+
+</body>
+</html>
+
+
+
+{% comment %}  {% endcomment %}
+
+
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
+from decimal import Decimal
+from django.shortcuts import render, redirect
+from django.db.models import Sum
+from .models import UserBalance, Withdraw
+from .forms import WithdrawalForm
+
+@login_required
+def withdrawal(request):
+    # Attempt to retrieve the user's balance
+    try:
+        user_balance = UserBalance.objects.get(user=request.user)
+        balance = user_balance.balance
+    except UserBalance.DoesNotExist:
+        balance = Decimal('0.00')  # Set balance to 0 if no record exists
+
+    # Check for pending withdrawals and calculate total pending amount
+    pending_withdrawals_query = Withdraw.objects.filter(user=request.user, status='pending')
+    pending_withdrawals_total = pending_withdrawals_query.aggregate(total=Sum('amount'))['total'] or Decimal('0.00')
+
+    if pending_withdrawals_query.exists():
+        messages.error(request, "You already have a pending withdrawal. Please complete the existing one before creating a new withdrawal.")
+        return render(request, 'withdraw.html', {'balance': balance, 'pending_withdrawals': pending_withdrawals_total, 'pending': True})
+
+    if request.method == 'POST':
+        form = WithdrawalForm(request.POST)
+        if form.is_valid():
+            withdrawal = form.save(commit=False)  
+            withdrawal.user = request.user  # Set the user
+
+            # Check if the user has enough balance
+            if withdrawal.amount > balance:
+                messages.error(request, "Insufficient balance to make this withdrawal.")
+                return render(request, 'withdraw.html', {'form': form, 'balance': balance, 'pending_withdrawals': pending_withdrawals_total, 'pending': False})
+
+            # Deduct the withdrawal amount from the balance
+            user_balance.balance -= withdrawal.amount
+            user_balance.save()
+
+            # Save withdrawal request to the database
+            withdrawal.status = 'pending'  # Add 'pending' status for review
+            withdrawal.save()
+
+            # Notify the admin via email about the new withdrawal
+            admin_email = settings.ADMIN_EMAIL  
+            sender_name = "Radiant Flip"  
+            sender_email = settings.DEFAULT_FROM_EMAIL 
+            formatted_from_email = f"{sender_name} <{sender_email}>" 
+
+            send_mail(
+                subject=f'New Withdrawal Request from {request.user.username}',
+                message=f"A new withdrawal has been requested:\n\n"
+                        f"User: {request.user.username}\n"
+                        f"Amount: {withdrawal.amount}\n"
+                        f"Wallet Address: {withdrawal.wallet_address}\n",
+                from_email=formatted_from_email, 
+                recipient_list=[admin_email],
+                fail_silently=False,
+            )
+
+            # Store necessary withdrawal data in session
+            request.session['withdrawal_data'] = {
+                'amount': float(withdrawal.amount),
+                'wallet_address': withdrawal.wallet_address,
+            }
+
+            # Redirect to confirmation page
+            messages.success(request, "Withdrawal placeed  successfully!")
+            return redirect('account')
+            
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = WithdrawalForm()
+
+    # Pass balance and pending withdrawals to the template
+    return render(request, 'withdraw.html', {
+        'form': form,
+        'balance': balance,
+        'pending_withdrawals': pending_withdrawals_total,
+        'pending': False
+    })

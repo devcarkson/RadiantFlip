@@ -1,0 +1,92 @@
+{% extends "dashnav.html" %}
+{% block title %}Comfirm deposit | Radiant Flip{% endblock title %}
+{% load static %}
+{% block content %}
+<main id="as-main-deposit" class="uk-section-xsmall">
+    <header class="uk-heading uk-text-center uk-margin-small-bottom">
+        <h1 class="uk-heading-line">Deposit Confirmation</h1>
+    </header>
+
+    <div>
+        <div class="uk-card uk-card-default uk-margin-top">
+            <div class="as-card-no-ticket">
+                <figure>
+                    <div class="table-responsive">
+                        <table cellspacing="0" cellpadding="2" class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Plan:</th>
+                                    <td>{{ staking_plan_display }}</td>
+                                    <td rowspan="6">
+                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bitcoin:1Bxjop8knreWWXkeS78cbv37u1FjqHy1vV" id="coin_payment_image">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Profit:</th>
+                                    <td>{{ staking_plan_display }} Daily</td>
+                                </tr>
+                                <tr>
+                                    <th>Principal Return:</th>
+                                    <td>No (included in profit)</td>
+                                </tr>
+                                <tr>
+                                    <th>Principal Withdraw:</th>
+                                    <td>Not available</td>
+                                </tr>
+                                <tr>
+                                    <th>Credit Amount:</th>
+                                    <td>${{ deposit_data.amount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Deposit Fee:</th>
+                                    <td>0.00% + $0.00 (min. $0.00 max. $0.00)</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ deposit_data.payment_system }} Debit Amount:</th>
+                                    <td>{{ deposit_data.crypto_amount }}</td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+    
+                        <div class="bitcoin_form bitcoin11" id="coinpr_form">
+                            Please send <b>{{ deposit.crypto_amount }} {{ deposit.payment_system }}</b> to <i><a
+                                href="{{ deposit.payment_system }}:{{ wallet_address }}?amount={{ deposit.crypto_amount }}&amp;message=Deposit+to+{{ site_name }}+User+{{ request.user.username }}"
+                                style="text-transform: initial">{{ wallet_address }}</a></i><br>
+                        </div>
+                        <div id="placeforstatus">
+                            <script language="javascript">
+                                function update_status_from_iframe() {
+                                    window.parent.document.getElementById("placeforstatus").innerHTML = document.documentElement.innerHTML;
+                                }
+                            </script>
+                            <b>Order status:</b> Waiting for payment <br> 
+                            <!-- Form to submit payment confirmation -->
+                            <form action="{% url 'confirm_deposit' %}" method="post">
+                                {% csrf_token %}
+                                <div class="text-center">
+                                    <button type="submit" class="uk-button uk-button-primary uk-button-large">
+                                        I have made payment
+                                    </button>
+                                </div>
+                            </form>
+
+                            
+                            
+                            <script language="javascript">
+                                window.parent.document.getElementById("coinpr_form").style.display = ""; 
+                                window.parent.document.getElementById("coin_payment_image").style.display = "";
+                            </script>
+                            <script language="javascript"> setTimeout("location.reload()", 30000); </script>
+                        </div>
+            
+                    </div>
+                </figure>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+</main>
+{% endblock %}

@@ -1,0 +1,385 @@
+{% extends "dashnav.html" %}
+{% block title %}Deposit | Radiant Flip{% endblock title %}
+{% load static %}
+{% block content %}
+<main id="as-main-deposit" class="uk-section-xsmall">
+   <div class="uk-container uk-container-expand">
+      <header class="uk-heading uk-text-center uk-margin-small-bottom">
+         <h1 class="uk-heading-line">Create a new Deposit</h1>
+      </header>
+
+
+<script language="javascript"><!--
+function openCalculator(id)
+{
+
+  w = 225; h = 400;
+  t = (screen.height-h-30)/2;
+  l = (screen.width-w-30)/2;
+  window.open('?a=&type=' + id, 'calculator' + id, "top="+t+",left="+l+",width="+w+",height="+h+",resizable=1,scrollbars=0");
+
+
+  
+  for (i = 0; i < document.spendform.h_id.length; i++)
+  {
+    if (document.spendform.h_id[i].value == id)
+    {
+      document.spendform.h_id[i].checked = true;
+    }
+  }
+
+  
+
+}
+
+function updateCompound() {
+  var id = 0;
+  var tt = document.spendform.h_id.type;
+  if (tt && tt.toLowerCase() == 'hidden') {
+    id = document.spendform.h_id.value;
+  } else {
+    for (i = 0; i < document.spendform.h_id.length; i++) {
+      if (document.spendform.h_id[i].checked) {
+        id = document.spendform.h_id[i].value;
+      }
+    }
+  }
+
+  var cpObj = document.getElementById('compound_percents');
+  if (cpObj) {
+    while (cpObj.options.length != 0) {
+      cpObj.options[0] = null;
+    }
+  }
+
+  if (cps[id] && cps[id].length > 0) {
+    document.getElementById('coumpond_block').style.display = '';
+
+    for (i in cps[id]) {
+      cpObj.options[cpObj.options.length] = new Option(cps[id][i]);
+    }
+  } else {
+    document.getElementById('coumpond_block').style.display = 'none';
+  }
+}
+var cps = {};
+--></script>
+
+
+
+ 
+<form method="post" name="spendform" class="uk-form-stacked uk-child-width-1-2@l" uk-height-match="target: > fieldset > div > .uk-card" uk-grid>
+   {% csrf_token %}
+
+   {% if form.errors %}
+   <div class="alert alert-danger">
+       <strong>Please correct the errors below:</strong>
+       <ul>
+           {% for field in form %}
+               {% if field.errors %}
+                   <li>{{ field.label }}: {{ field.errors }}</li>
+               {% endif %}
+           {% endfor %}
+       </ul>
+   </div>
+{% endif %}
+   <input type="hidden" name="form_id" value="17277418781840">
+   <input type="hidden" name="form_token" value="517749a958f68b6cd92ecd25d6428294">
+   <input type="hidden" name="a" value="deposit">
+
+   <!-- Payment System Selection -->
+   <fieldset id="as-new-deposit-select" class="uk-fieldset">
+       <div class="uk-cube-top-left uk-cube-figure">
+           <div class="uk-card uk-card-default as-card-medium">
+               <div class="uk-legend">
+                   <mark>1</mark>
+                   <span class="uk-text-background">Select a payment method</span>
+               </div>
+               <label class="uk-form-label" for="as-form-amount">Select payment Topup</label>
+               <ul class="uk-grid-small uk-child-width-1-2@xl" uk-grid>
+                   <li class="js-form-closest">
+                       <div class="uk-card uk-card-default uk-card-form">
+                           <input class="uk-radio" type="radio" name="payment_system" value="Bitcoin" id="Bitcoin" required>
+                           <label class="uk-icon uk-icon-button" style="background: none;">
+                               <img src="{% static 'images/48.gif' %}" width="48" height="48">
+                           </label>
+                           <div>
+                               <div class="as-payment-name">Bitcoin</div>
+                           </div>
+                       </div>
+                   </li>
+                   <li class="js-form-closest">
+                       <div class="uk-card uk-card-default uk-card-form">
+                           <input class="uk-radio" type="radio" name="payment_system" value="Ethereum" id="Ethereum" required>
+                           <label class="uk-icon uk-icon-button" style="background: none;">
+                               <img src="{% static 'images/Ethereum-Logo-PNG-Free-Image.png' %}" width="48" height="48">
+                           </label>
+                           <div>
+                               <div class="as-payment-name">Ethereum</div>
+                           </div>
+                       </div>
+                   </li>
+                   <li class="js-form-closest">
+                       <div class="uk-card uk-card-default uk-card-form">
+                           <input class="uk-radio" type="radio" name="payment_system" value="Litecoin" id="Litecoin" required>
+                           <label class="uk-icon uk-icon-button" style="background: none;">
+                               <img src="{% static 'images/licensed-image.png' %}" width="48" height="48">
+                           </label>
+                           <div>
+                               <div class="as-payment-name">Litecoin</div>
+                           </div>
+                       </div>
+                   </li>
+               </ul>
+           </div>
+       </div>
+   </fieldset>
+
+   <!-- Staking Plan Selection -->
+   <fieldset id="as-new-deposit-amount" class="uk-fieldset uk-form-controls-label-figure">
+       <div class="uk-cube-bottom-left uk-cube-figure">
+           <div class="uk-card uk-card-default as-card-medium">
+               <div class="uk-legend">
+                   <mark>2</mark>
+                   <span class="uk-text-background">Choose the Staking plan</span>
+               </div>
+               <ul class="uk-subnav uk-subnav-pill uk-child-width-1-2@m uk-child-width-1-2@l uk-flex-center uk-margin">
+                   <label class="js-plan-label" for="deposit_form_plan_id_0" style="cursor: pointer;">
+                       <span>LITE</span>
+                       <input type="radio" name="staking_plan" value="1" id="deposit_form_plan_id_0" checked hidden />
+                   </label>
+                   <label class="js-plan-label" for="deposit_form_plan_id_1" style="cursor: pointer;">
+                       <span>STANDARD</span>
+                       <input type="radio" name="staking_plan" value="2" id="deposit_form_plan_id_1" hidden />
+                   </label>
+                   <label class="js-plan-label" for="deposit_form_plan_id_2" style="cursor: pointer;">
+                       <span>PREMIUM</span>
+                       <input type="radio" name="staking_plan" value="3" id="deposit_form_plan_id_2" hidden />
+                   </label>
+                   <label class="js-plan-label" for="deposit_form_plan_id_3" style="cursor: pointer;">
+                       <span>DIAMOND</span>
+                       <input type="radio" name="staking_plan" value="4" id="deposit_form_plan_id_3" hidden />
+                   </label>
+               </ul>
+               
+               <!-- Plan Tab Content -->
+               <div class="js-plan-tab-content">
+                   <div class="js-plan-tab js-plan-tab-1">
+                       <div class="new-deposit-plan-block">
+                           <div class="new-deposit-plan-block__inner">
+                               <div class="new-deposit-plan-block__body">
+                                   <div class="new-deposit-plan-block__earnings-row">
+                                       <div class="new-deposit-plan-block__percent">50<small>%</small></div>
+                                       <div class="new-deposit-plan-block__period">Daily <br> Income</div>
+                                   </div>
+                                   <div class="new-deposit-plan-block__description-row">
+                                       <div class="new-deposit-plan-block__term">For 48 hrs</div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="js-plan-tab js-plan-tab-2" style="display: none;">
+                       <div class="new-deposit-plan-block">
+                           <div class="new-deposit-plan-block__inner">
+                               <div class="new-deposit-plan-block__body">
+                                   <div class="new-deposit-plan-block__earnings-row">
+                                       <div class="new-deposit-plan-block__percent">100<small>%</small></div>
+                                       <div class="new-deposit-plan-block__period">Daily <br> Income</div>
+                                   </div>
+                                   <div class="new-deposit-plan-block__description-row">
+                                       <div class="new-deposit-plan-block__term">For 72 hrs</div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="js-plan-tab js-plan-tab-3" style="display: none;">
+                       <div class="new-deposit-plan-block">
+                           <div class="new-deposit-plan-block__inner">
+                               <div class="new-deposit-plan-block__body">
+                                   <div class="new-deposit-plan-block__earnings-row">
+                                       <div class="new-deposit-plan-block__percent">150<small>%</small></div>
+                                       <div class="new-deposit-plan-block__period">Daily <br> Income</div>
+                                   </div>
+                                   <div class="new-deposit-plan-block__description-row">For 96 hrs</div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="js-plan-tab js-plan-tab-4" style="display: none;">
+                       <div class="new-deposit-plan-block">
+                           <div class="new-deposit-plan-block__inner">
+                               <div class="new-deposit-plan-block__body">
+                                   <div class="new-deposit-plan-block__earnings-row">
+                                       <div class="new-deposit-plan-block__percent">200<small>%</small></div>
+                                       <div class="new-deposit-plan-block__period">Daily <br> Income</div>
+                                   </div>
+                                   <div class="new-deposit-plan-block__description-row">For 120 hrs</div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- Enter Amount -->
+               <div class="new-deposit-amount-row uk-margin-medium-top">
+                   <div class="new-deposit-amount-row__amount-cell">
+                       <label class="uk-form-label" for="as-form-amount">
+                           <span class="uk-flex uk-flex-between">Enter Amount</span>
+                       </label>
+                       <div class="uk-form-controls">
+                           <figure class="uk-form-controls-figure">
+                               <img src="{% static 'img/icon/form/amount.svg' %}" width="60" height="60" loading="lazy" alt="icon">
+                           </figure>
+                           <small class="uk-form-icon uk-form-icon-flip js-currs-slug"></small>
+                           <input type="text" name="amount" placeholder="Enter amount in USD" required="required" class="uk-input form-control" />
+                       </div>
+                   </div>
+                   <div class="new-deposit-amount-row__currency-cell">
+                       <span class="new-deposit-amount-row__currency-label"></span>
+                   </div>
+               </div>
+
+               <!-- Submit Button -->
+               <button type="submit" class="uk-button uk-button-default uk-margin-medium-top">Continue</button>
+           </div>
+       </div>
+   </fieldset>
+</form>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+       const planLabels = document.querySelectorAll('.js-plan-label');
+       const planTabs = document.querySelectorAll('.js-plan-tab');
+   
+       // Function to show the selected plan
+       function showSelectedPlan() {
+           // Hide all plan tabs
+           planTabs.forEach(tab => tab.style.display = 'none');
+           
+           // Get the index of the currently checked radio button
+           const selectedPlanIndex = Array.from(planLabels).findIndex(label => label.querySelector('input').checked);
+   
+           // Show the selected plan tab
+           if (selectedPlanIndex !== -1) {
+               planTabs[selectedPlanIndex].style.display = 'block';
+           }
+       }
+   
+       // Initially select the first staking plan and show it
+       planLabels[0].querySelector('input').checked = true; // Select the first plan
+       showSelectedPlan(); // Show the first plan on page load
+   
+       // Add change event listeners to each plan label
+       planLabels.forEach((label, index) => {
+           label.addEventListener('click', function () {
+               showSelectedPlan(); // Show the selected plan when a label is clicked
+           });
+       });
+   
+       const paymentSystems = document.querySelectorAll('input[name="payment_system"]');
+       paymentSystems.forEach(system => {
+           system.addEventListener('change', function () {
+               const selectedSystem = this.value;
+               // Your logic to handle what happens when a payment system is selected
+           });
+       });
+   });
+   </script>
+
+<style>
+   // Function to handle the change in payment system selection
+function handlePaymentSystemChange() {
+    // Get the selected payment system
+    const selectedPaymentSystem = document.querySelector('input[name="payment_system"]:checked').value;
+    
+    // Make an AJAX request to fetch the wallet address from the server
+    fetch(`/get-wallet-address/?payment_system=${selectedPaymentSystem}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.wallet_address) {
+                // Display the wallet address in the desired location
+                document.getElementById('wallet-address-display').innerText = `Wallet Address: ${data.wallet_address}`;
+            } else {
+                // Handle the error if no wallet address is found
+                document.getElementById('wallet-address-display').innerText = 'Wallet Address: Not available';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching wallet address:', error);
+        });
+}
+
+// Add event listeners to all radio buttons for the payment system
+document.querySelectorAll('input[name="payment_system"]').forEach(function (radio) {
+    radio.addEventListener('change', handlePaymentSystemChange);
+});
+
+// Trigger the function for the initially selected payment system (if any)
+document.addEventListener('DOMContentLoaded', function() {
+    const checkedPaymentSystem = document.querySelector('input[name="payment_system"]:checked');
+    if (checkedPaymentSystem) {
+        handlePaymentSystemChange();
+    }
+});
+
+</style>
+
+<script language=javascript>
+/*
+for (i = 0; i<document.spendform.type.length; i++) {
+  if ((document.spendform.type[i].value.match(/^process_/))) {
+    document.spendform.type[i].checked = true;
+    break;
+  }
+}
+*/
+updateCompound();
+</script>
+
+
+
+
+<script language=javascript>
+
+  for (i = 0; i<document.spendform.type.length; i++) {
+    if ((document.spendform.type[i].value.match(/^process_/))) {
+      document.spendform.type[i].checked = true;
+      break;
+    }
+  }
+  </script>
+
+<script>
+   function filterFormRadio() {
+       var planSelector = '[name="h_id"]';
+      
+          
+       function filterButtons() {
+           
+           var planId = $(planSelector + ':checked').val();
+           
+           $(planSelector).closest('label').removeClass('uk-active');
+           $(planSelector + ':checked').closest('label').addClass('uk-active');
+           
+           $('.js-plan-tab').hide();
+           $('.js-plan-tab-' + planId).show();
+           
+       }
+       
+       filterButtons();
+       $(planSelector).on('change', filterButtons);
+   }
+   
+   if (document.addEventListener) {
+       document.addEventListener('DOMContentLoaded', filterFormRadio);
+   } else {
+       document.attachEvent('onreadystatechange', filterFormRadio);
+   }
+</script>
+
+
+</div>
+</main>
+{% endblock %}

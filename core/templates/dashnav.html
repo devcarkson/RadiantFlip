@@ -1,0 +1,407 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Radiant flip</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/framework.css" %}">
+    <link rel="stylesheet" href="{% static "css/dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "css/custom.css" %}">
+    <link href="{% static "css/spop.min.css" %}" rel="stylesheet">
+    <script src="{% static "js/uikit.min.js" %}"></script>
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static "img/favicon-32x32.png" %}">
+
+    <!--From base1.html-->
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+	<link rel="stylesheet" href="{% static "css/vendor.css" %}">
+	<link rel="stylesheet" href="{% static "css/style.css" %}">
+	<link href="{% static "css/spop.min.css" %}" rel="stylesheet">
+
+</head>
+<body>
+<nav id="asMenu" class="uk-visible@s">
+    <ul class="uk-iconnav uk-iconnav-vertical uk-animation-fade uk-animation-fast">
+        <li class="">
+            <a href="{% url "account" %}">
+                <span class="uk-background-icon">
+                    <img src="{% static "img/icon/account/dashboard.svg" %}" width="31" height="30" loading="lazy" alt=""
+                        uk-svg>
+                </span>
+                Dashboard
+            </a>
+        </li>
+        <li class="">
+            <a href="{% url "deposit" %}">
+                <span class="uk-background-icon">
+                    <img src="{% static "img/icon/account/new-deposit.svg" %}" width="36" height="31" loading="lazy" alt=""
+                        uk-svg>
+                </span>
+                New Deposit
+            </a>
+        </li>
+        <li class="">
+            <a href="{% url "withdrawal" %}">
+                <span class="uk-background-icon">
+                    <img src="{% static "img/icon/account/withdrawal.svg" %}" width="28" height="28" loading="lazy" alt=""
+                        uk-svg>
+                </span>
+                Withdrawal
+            </a>
+        </li>
+        <li class="">
+            <a href="{% url "history" %}">
+                <span class="uk-background-icon">
+                    <img src="{% static "img/icon/account/my-deposit.svg" %}" width="36" height="31" loading="lazy" alt=""
+                        uk-svg>
+                </span>
+                Transactions
+            </a>
+        </li>
+        <li class="">
+            <a href="{% url "stake" %}">
+                <span class="uk-background-icon">
+                    <img src="{% static "img/icon/account/my-deposit.svg" %}" width="36" height="31" loading="lazy" alt=""
+                        uk-svg>
+                </span>
+                Stake
+            </a>
+        </li>
+        <li class="">
+            <a href="{% url "referral" %}">
+                <span class="uk-background-icon">
+                    <img src="{% static "img/icon/account/partners.svg" %}" width="36" height="31" loading="lazy" alt=""
+                        uk-svg>
+                </span>
+                Partners
+            </a>
+        </li>
+        <li class="">
+            <a href="{% url "edit_account" %}">
+                <span class="uk-background-icon">
+                    <img src="{% static "img/icon/account/account-menu-support.svg" %}" width="36" height="31" loading="lazy"
+                        alt="" uk-svg>
+                </span>
+                Settings
+            </a>
+        </li>
+        <li class="">
+            <a href="{% url "security" %}">
+                <span class="uk-background-icon">
+                    <img src="{% static "img/icon/account/account-menu-history.svg" %}" width="36" height="31" loading="lazy"
+                        alt="" uk-svg>
+                </span>
+                Security
+            </a>
+        </li>
+    </ul>
+</nav>
+<header id="asNavbar" class="uk-section-xsmall">
+    <div class="uk-container uk-container-expand">
+
+        <nav class="uk-navbar-container" uk-navbar="offset: 10">
+
+            <div class="uk-navbar-left uk-width-expand">
+
+                <a href="{% url "index" %}" class="uk-navbar-item uk-logo">
+                    <img src="{% static "img/logo-white.png" %}" width="233" height="41" loading="lazy" alt="logo">
+                </a>
+
+                <aside id="asNavbar-user" class="uk-navbar-item uk-visible@l">
+                    <span class="uk-text-muted uk-margin-small-right">/</span>
+                    <span class="uk-text-lead">Hello, {{request.user}}!</span>
+                </aside>
+               
+            </div>
+
+            <div class="uk-navbar-right uk-width-auto">
+
+                <ul id="asNavbar-nav-right" class="uk-navbar-nav uk-visible@l">
+                    <li id="asNavbar-time" class="uk-visible@xl">
+                        <div class="uk-text-emphasis uk-text-nowrap">
+                            <img class="uk-margin-less-right" src="{% static "img/icon/account/time.svg" %}" width="27"
+                                height="29" loading="lazy" alt="">
+                            20-08-2024 12:42
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{% url "logout" %}">
+                            Log out
+                            <img src="{% static "img/icon/sign-in.svg" %}" width="21" height="21" alt="icon" uk-svg>
+                        </a>
+                    </li>
+                </ul>
+
+                <a href="#asOffcanvasRight" class="uk-navbar-toggle uk-preserve uk-hidden@xl" uk-navbar-toggle-icon
+                    uk-toggle></a>
+
+            </div>
+        </nav> <br>
+        <center>
+            <!--Messages Notifcation-->
+            <style>
+                .alert-custom {
+                    background-color: black;
+                    color: #d0ff96;
+                }
+            </style>
+            
+            <!-- Message Alert -->
+            <div class="alert-container" style="z-index:1">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning alert-custom alert-dismissible fade show alert-timeout" role="alert">
+                            <strong>Hello!</strong> {{ message }}.
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            
+            <script>
+                // Hide alert messages after 6 seconds
+                setTimeout(function() {
+                    var alerts = document.querySelectorAll('.alert-timeout');
+                    alerts.forEach(function(alert) {
+                        alert.style.display = 'none';
+                    });
+                }, 6000);
+            </script>
+        </center>
+    </div>
+</header>
+
+
+
+
+
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+
+
+<aside id="asOffcanvasRight" uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <div class="uk-offcanvas-header">
+            Close Menu
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+        </div>
+
+        <ul class="uk-nav uk-nav-default uk-hidden@s">
+            <li>
+                <a href="{% url "account" %}">
+                    <img src="{% static "img/icon/account/dashboard.svg" %}" width="31" height="30" loading="lazy" alt=""
+                        uk-svg>
+                    Dashboard
+                </a>
+            </li>
+            <li class="">
+                <a href="{% url "deposit" %}">
+                    <img src="{% static "img/icon/account/new-deposit.svg" %}" width="36" height="31" loading="lazy" alt=""
+                        uk-svg>
+                    New Deposit
+                </a>
+            </li>
+            <li class="">
+                <a href="{% url "withdrawal" %}">
+                    <img src="{% static "img/icon/account/withdrawal.svg" %}" width="28" height="28" loading="lazy" alt=""
+                        uk-svg>
+                    Withdrawal
+                </a>
+            </li>
+            <li class="">
+                <a href="{% url "history" %}">
+                    <img src="{% static "img/icon/account/my-deposit.svg" %}" width="36" height="31" loading="lazy" alt=""
+                        uk-svg>
+                    Transactions
+                </a>
+            </li>
+            <li class="">
+                <a href="{% url "stake" %}">
+                    <img src="{% static "img/icon/account/my-deposit.svg" %}" width="36" height="31" loading="lazy" alt=""
+                        uk-svg>
+                    Stake
+                </a>
+            </li>
+            <li class="">
+                <a href="{% url "referral" %}">
+                    <img src="{% static "img/icon/account/partners.svg" %}" width="36" height="31" loading="lazy" alt=""
+                        uk-svg>
+                    Partners
+                </a>
+            </li>
+            <li class="">
+                <a href="{% url "edit_account" %}">
+                    <img src="{% static "img/icon/account/account-menu-support.svg" %}" width="36" height="31" loading="lazy"
+                        alt="" uk-svg>
+                    Settings
+                </a>
+            </li>
+            <li class="">
+                <a href="{% url "security" %}">
+                    <img src="{% static "img/icon/account/account-menu-history.svg" %}" width="36" height="31" loading="lazy"
+                        alt="" uk-svg>
+                    Security
+                </a>
+            </li>
+
+            <li class="uk-nav-divider"></li>
+        </ul>
+
+        <ul class="uk-nav uk-nav-default">
+
+            <li>
+                <a href="https://t.me/" target="_blank">
+                    <img src="{% static "img/another/telegram.png" %}" width="29" height="29" loading="lazy" alt=""
+                        uk-svg>
+                    Telegram
+                </a>
+            </li>
+
+            <li class="uk-nav-divider"></li>
+
+            <li>
+                <a href="{% url "logout" %}">
+                    <img src="{% static "img/icon/sign-in.svg" %}" width="21" height="21" loading="lazy" alt="icon" uk-svg>
+                    Log out
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</aside>
+
+<script src="{% static "js/spop.min.js" %}"></script>
+
+<script type="text/javascript">
+    var country_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Chad", "Chile", "China", "Colombia", "Congo", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Gibraltar", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", , "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen"];
+    var name_list = ["Linda", "Bush", "Joe", "mark", "Noah", "Emma", "Liam", "Sophia", "Jacob", "Olivia", "Mason", "Isabella", "William", "Ava", "Ethan", "Mia", "Michael", "Abigail", "Alexander", "Emily", "James", "Madison", "Elijah", "Charlotte", "Daniel", "Elizabeth", "Benjamin", "Amelia", "Aiden", "Chloe", "Jayden", "Ella", "Logan", "Evelyn", "Matthew", "Avery", "David", "Sofia", "Joseph", "Harper", "Lucas", "Grace", "Jackson", "Addison", "Anthony", "Victoria", "Joshua", "Natalie", "Samuel", "Lily", "Andrew", "Aubrey", "Gabriel", "Lillian", "Christopher", "Zoey", "John", "Hannah", "Dylan", "Layla", "Carter", "Brooklyn", "Isaac", "Samantha", "Ryan", "Zoe", "Luke", "Leah", "Oliver", "Scarlett", "Nathan", "Riley", "Henry", "Camila", "Owen", "Savannah", "Caleb", "Anna", "Wyatt", "Audrey", "Christian", "Allison", "Sebastian", "Aria"];
+    function choice(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+    function randomNumber(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    function payinout() {
+        var nu = Math.floor(randomNumber(500, 10500));
+        var nam = choice(name_list);
+        var con = choice(country_list);
+        var mode = choice(['deposited', 'withdrew', 'reinvested', 'invested']);
+        spop({
+            template: nam + " from " + con + " " + mode + " $" + nu + " ...",
+            position: 'top-center',
+            style: 'success',
+            autoclose: 10000,
+        });
+    }
+    setInterval(payinout, 24000);
+</script>
+<!--footer section end-->
+
+<div class="gtranslate_wrapper"></div>
+
+
+<style>
+    .gt_float_switcher {
+        border-radius: 5px;
+        background: #d7d7d7;
+    }
+
+    .gt_float_switcher .gt-selected {
+        background-color: #fff;
+    }
+
+    .gt_float_switcher .gt-selected .gt-current-lang span.gt-lang-code {
+        font-family: "roboto slab", sans-serif;
+    }
+
+    .nturl {
+        font-size: 0;
+        color: transparent;
+    }
+
+    .nturl img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .gt-lang-code {
+        font-size: 18px;
+    }
+</style>
+
+<!-- Js files -->
+<script src="{% static "js/vendor.js" %}"></script>
+<script src="{% static "js/main.js" %}"></script>
+<script src="{% static "js/nicescroll.min.js" %}"></script>
+
+<script>
+    $(document).ready(function () {
+        // Define the minimum and maximum investment amounts
+        var minAmount = 300;
+        var maxAmount = 1000000;
+
+        // Listen for changes in the plan or amount fields
+        $('#cal_plan, #cal_amount').on('change keyup', function () {
+            calculateProfits();
+        });
+
+        function calculateProfits() {
+            // Get the selected plan and amount
+            var plan = $('#cal_plan').val();
+            var amount = parseFloat($('#cal_amount').val());
+
+            // Validate the amount
+            if (isNaN(amount) || amount < minAmount || amount > maxAmount) {
+                $('#daily_res').text('$0');
+                $('#total_res').text('$0');
+                return;
+            }
+
+            // Define the daily profit percentages for each plan
+            var dailyRates = {
+                1: 50,  // 200% for plan 1
+                2: 100,  // 300% for plan 2
+                3: 150,  // 400% for plan 3
+                4: 200   // 500% for plan 4
+            };
+
+            // Define the duration of each plan (in days)
+            var planDurations = {
+                1: 2,  // Plan 1 duration: 2 days
+                2: 3,  // Plan 2 duration: 3 days
+                3: 4,  // Plan 3 duration: 4 days
+                4: 5   // Plan 4 duration: 5 days
+            };
+
+            // Calculate the daily profit based on the percentage increase
+            var dailyProfit = amount * (dailyRates[plan] / 100); 
+            var totalProfit = dailyProfit * planDurations[plan]; 
+
+            // Update the result fields with the calculated profits
+            $('#daily_res').text('$' + dailyProfit.toFixed(2)); // Show daily profit with 2 decimal places
+            $('#total_res').text('$' + totalProfit.toFixed(2)); // Show total profit with 2 decimal places
+        }
+    });
+</script>
+
+
+<script src="{% static "js/spop.min.js" %}"></script>
+<script>window.gtranslateSettings = { "default_language": "en", "native_language_names": true, "languages": ["en", "ru", "fr", "de", "it", "es", "uk", "tr"], "wrapper_selector": ".gtranslate_wrapper", "float_switcher_open_direction": "right" }</script>
+
+<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
+</body>
+
+</html>

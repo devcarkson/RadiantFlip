@@ -1,0 +1,140 @@
+{% extends "dashnav.html" %}
+{% block title %}Dashboard | Radiant Flip{% endblock title %}
+{% load static %}
+{% block content %}
+<main id="as-main-my-deposit" class="uk-section-xsmall">
+    <div class="uk-container uk-container-expand">
+
+        <div>
+
+
+            <div class="uk-grid" uk-grid="">
+
+                <div id="as-partners-statistic" class="uk-width-2-3@xl uk-first-column">
+                    <div class="uk-card uk-card-default uk-card-body">
+                        <header class="uk-heading uk-text-center">
+                            <h1 class="uk-heading-line">Partner Statistics</h1>
+                        </header>
+                
+                        <div class="uk-grid-medium uk-margin uk-grid" uk-grid="">
+                            <div class="uk-width-1-3@l uk-first-column">
+                                <figure class="as-total-amount">
+                                    <figure>
+                                        <img src="{% static "img/icon/account/amount.svg" %}" width="103" height="101" loading="lazy" alt="icon">
+                                    </figure>
+                                    <figcaption>
+                                        <div class="js-stats-item js-stats-inserts" style="display: block;">
+                                            <div class="uk-text-meta uk-margin-less-bottom">Total Referrals</div>
+                                            <ins class="uk-text-background">{{ total_referrals }}</ins>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="uk-width-1-3@l uk-first-column">
+                                <figure class="as-total-amount">
+                                    <figure>
+                                        <img src="{% static "img/icon/account/amount.svg" %}" width="103" height="101" loading="lazy" alt="icon">
+                                    </figure>
+                                    <figcaption>
+                                        <div class="js-stats-item js-stats-inserts" style="display: block;">
+                                            <div class="uk-text-meta uk-margin-less-bottom">Active Referrals</div>
+                                            <ins class="uk-text-background">{{ active_referrals }}</ins>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="uk-width-1-3@l uk-first-column">
+                                <figure class="as-total-amount">
+                                    <figure>
+                                        <img src="{% static "img/icon/account/amount.svg" %}" width="103" height="101" loading="lazy" alt="icon">
+                                    </figure>
+                                    <figcaption>
+                                        <div class="js-stats-item js-stats-inserts" style="display: block;">
+                                            <div class="uk-text-meta uk-margin-less-bottom">Total Earnings</div>
+                                            <ins class="uk-text-background">${{ total_earnings|floatformat:2 }}</ins>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="table-responsive">
+                    <br>
+
+                </div>
+            </div>
+            <section id="as-partners-program" class="uk-width-1-3@xl uk-form-controls-label-figure">
+                <div class="more-limit-banner uk-margin-medium-bottom">
+                    <div class="more-limit-banner__inner">
+                        <img src="{% static "img/another/more-limit-banner-icon.png" %}" class="more-limit-banner__icon"
+                            width="196" height="165">
+                        <div class="more-limit-banner__content">
+                            Earn up to <b>3%</b> - for 1st level <b> referral</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-cube-bottom-left uk-cube-figure">
+                    <div class="uk-card uk-card-default uk-card-body">
+
+                        <div class="referral-right-container">
+                            <div class="referral-right-container__inner">
+                                <div class="referral-right-container__first">
+                                    <header class="uk-heading uk-text-center">
+                                        <h2 class="uk-h3 uk-margin-small-bottom">Affiliate program</h2>
+                                    </header>
+
+                                    <p class="uk-text-center uk-margin-small-top">
+                                        Start promote using your referral link and banners tool to get downline and earn
+                                        passive income
+                                    </p>
+
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="as-form-referral">Website referral
+                                            link</label>
+                                        <div class="uk-form-controls">
+                                            <figure class="uk-form-controls-figure">
+                                                <img src="{% static "img/icon/form/referral.svg" %}" width="60" height="60"
+                                                    loading="lazy" alt="icon">
+                                            </figure>
+                                            <input class="uk-input uk-text-emphasis" type="url" value="{{ referral_link }}" id="as-form-referral" disabled="">
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="uk-margin-bottom">
+                                        <label class="uk-form-label" for="as-form-inviter">Your Upline</label>
+                                        <div class="uk-form-controls">
+                                            <figure class="uk-form-controls-figure">
+                                                <img src="{% static "img/icon/form/upline.svg" %}" width="60" height="60"
+                                                    loading="lazy" alt="icon">
+                                            </figure>
+                                            <input class="uk-input uk-text-emphasis" value="" type="text"
+                                                id="as-form-inviter" disabled="">
+                                        </div>
+                                    </div>-->
+                                </div>
+                                <div class="referral-right-container__second">
+                                    <div class="banners-banner referral-right-container__banners-banner">
+                                        <div class="banners-banner__inner">
+                                            <img src="{% static "img/another/banners-banner-icon.svg" %}"
+                                                class="banners-banner__icon" width="90" height="90">
+                                            <a href="?a=referallinks" class="banners-banner__link">
+                                                Show banners
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</main>
+{% endblock %}

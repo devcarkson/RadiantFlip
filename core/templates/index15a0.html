@@ -1,0 +1,107 @@
+{% extends "base1.html" %}
+{% block title %}Contact | Radiant Flip{% endblock title %}
+{% block content %}
+<section class="sign">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-5 offset-lg-3">
+
+				<!--Messages Notifcation-->
+				<style>
+					.alert-custom {
+						background-color: #068DB4;
+						color: white;
+					}
+				</style>
+
+				<!-- Message Alert -->
+				<div class="alert-container" style="z-index:1">
+					{% if messages %}
+						{% for message in messages %}
+							<div class="alert alert-warning alert-custom alert-dismissible fade show alert-timeout" role="alert">
+								<strong>Hello!</strong> {{ message }}.
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+
+				<script>
+					// Hide alert messages after 6 seconds
+					setTimeout(function() {
+						var alerts = document.querySelectorAll('.alert-timeout');
+						alerts.forEach(function(alert) {
+							alert.style.display = 'none';
+						});
+					}, 6000);
+				</script>
+
+
+				<script language=javascript>
+
+					function checkform() {
+						if (document.mainform.name.value == '') {
+							alert("Please type your full name!");
+							document.mainform.name.focus();
+							return false;
+						}
+						if (document.mainform.email.value == '') {
+							alert("Please enter your e-mail address!");
+							document.mainform.email.focus();
+							return false;
+						}
+						if (document.mainform.message.value == '') {
+							alert("Please type your message!");
+							document.mainform.message.focus();
+							return false;
+						}
+						return true;
+					}
+
+				</script>
+
+				<form method="post" action="{% url 'contact' %}" name="mainform" onsubmit="return checkform()">
+					{% csrf_token %}
+					<input type="hidden" name="form_id" value="17277411114587">
+					<input type="hidden" name="form_token" value="88ad76ec9917cf6575390442dcef3956">
+					<input type="hidden" name="a" value="support">
+					<input type="hidden" name="action" value="send">
+				
+					<table cellspacing="0" cellpadding="2" border="0">
+						<div class="sign-box">
+							<div class="sign-title">
+								Contact
+								<p>Leave a message</p>
+							</div>
+				
+							<div class="contacts-form__inputs">
+								<label class="contacts-form__input contacts-form__input_icon">
+									<input type="text" name="name" value="" size="30" class="inpts" placeholder="Your Name" required>
+									<svg>
+										<use xlink:href="assets/img/sprite.svg#user"></use>
+									</svg>
+								</label>
+								<label class="contacts-form__input contacts-form__input_icon">
+									<input type="text" name="email" value="" size="30" class="inpts" placeholder="Your Email" required>
+									<svg>
+										<use xlink:href="assets/img/sprite.svg#mail"></use>
+									</svg>
+								</label>
+								<label class="contacts-form__input">
+									<textarea name="message" class="inpts" cols="45" rows="4" placeholder="Your Message" required></textarea>
+								</label>
+							</div>
+				
+							<button value="Send" type="submit" class="main-btn main-btn_orange main-btn_m" style="width:100%">Send Message</button>
+						</div>
+					</table>
+				</form>
+				
+
+
+			</div>
+		</div>
+	</div>
+
+</section>
+{% endblock content %}
+

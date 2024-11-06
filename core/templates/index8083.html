@@ -1,0 +1,52 @@
+{% extends "base1.html" %}
+{% block title %}Reset Password | Radiant Flip{% endblock title %}
+{% block content %}
+		<section class="sign">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 offset-lg-3">
+
+						<script language=javascript>
+							function checkform() {
+								if (document.forgotform.email.value == '') {
+									alert("Please type your username or email!");
+									document.forgotform.email.focus();
+									return false;
+								}
+								return true;
+							}
+						</script>
+
+
+
+						<form method="post" name="forgotform" onsubmit="return checkform();">
+							{% csrf_token %}
+							<input type="hidden" name="form_id" value="17277413662337">
+							<input type="hidden" name="form_token" value="e23b527b9e33ddff2436c48f1a25e1ea">
+							<input type="hidden" name="a" value="forgot_password">
+							<input type="hidden" name="action" value="forgot_password">
+							<div class="sign-box">
+								<div class="sign-title">
+									Forgot Password
+									<p>Recover Your Password</p>
+								</div>
+						
+								<div class="contacts-form__inputs">
+									<label class="contacts-form__input contacts-form__input_icon">
+										<input type="text" name="email" value="" class="inpts" size="30" placeholder="Your username or e-mail">
+										<svg>
+											<use xlink:href="assets/img/sprite.svg#mail"></use>
+										</svg>
+									</label>
+								</div>
+						
+								<button value="Forgot" type="submit" class="main-btn main-btn_orange main-btn_m" style="width:100%">Forgot</button>
+							</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+
+		</section>
+{% endblock content %}

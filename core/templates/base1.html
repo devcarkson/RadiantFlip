@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+    {% comment %} <link rel="shortcut icon" href="{% static "img/fav.png" %}"> {% endcomment %}
+	<link rel="icon" type="image/png" sizes="32x32" href="{% static "img/favicon-32x32.png" %}">
+	<meta content="ie=edge" http-equiv="x-ua-compatible">
+	<link rel="stylesheet" href="{% static "css/vendor.css" %}">
+	<link rel="stylesheet" href="{% static "css/style.css" %}">
+	<link href="{% static "css/spop.min.css" %}" rel="stylesheet">
+</head>
+
+<body>
+	<div class="wrapper">
+        <div>
+            {% block header %}
+                <div class="header-top">
+                    <div class="container">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-lg-3 col-md-5 col-7"><a class="header-logo" href="{% url "index" %}"><img
+                                        src="{% static "img/logo-white.png" %}" height="38" alt="logo" /></a></div>
+                            <div class="col-lg-9 col-md-7 col-5">
+                                <div class="header-nav">
+                                    <div class="header-menu d-none d-lg-flex flex-column flex-lg-row">
+                                        <a class="header-menu__item border-0" href="{% url "index" %}">
+                                            <span>
+                                                <i style="font-style: normal;">Home
+                                                </i>
+                                            </span>main
+                                            <div class="header-menu__icon">
+                                                <svg>
+                                                    <use xlink:href="assets/img/sprite.svg#arrow"></use>
+                                                </svg>
+                                            </div>
+                                        </a>
+                                        <a class="header-menu__item" href="{% url "faq" %}">
+                                            <span>
+                                                <i style="font-style: normal;">FAQ
+                                                </i>
+                                            </span>answers
+                                            <div class="header-menu__icon">
+                                                <svg>
+                                                    <use xlink:href="assets/img/sprite.svg#arrow"></use>
+                                                </svg>
+                                            </div>
+                                        </a>
+
+                                        <a class="header-menu__item" href="{% url "terms" %}">
+                                            <span>
+                                                <i style="font-style: normal;">Terms
+                                                </i>
+                                            </span>rules
+                                            <div class="header-menu__icon">
+                                                <svg>
+                                                    <use xlink:href="assets/img/sprite.svg#arrow"></use>
+                                                </svg>
+                                            </div>
+                                        </a>
+                                        <a class="header-menu__item mr-4" href="{% url "contact" %}">
+                                            <span>
+                                                <i style="font-style: normal;">Contacts
+                                                </i>
+                                            </span>Support
+                                            <div class="header-menu__icon">
+                                                <svg>
+                                                    <use xlink:href="assets/img/sprite.svg#arrow"></use>
+                                                </svg>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="header-btns mt-4">
+										{% if user.is_authenticated %}
+											{% comment %} <p>Hello, {{ user.username }}!<span> {% endcomment %}
+												<a class="main-btn main-btn_line" href="{% url 'account' %}">
+													<img src="{% static 'img/btn-login.svg' %}" alt="btn-login" />dashboard
+												</a>
+											</span></p>
+										{% else %}
+											<a class="main-btn main-btn_line" href="{% url 'login' %}">
+												<img src="{% static 'img/btn-login.svg' %}" alt="btn-login" />login
+											</a>
+											<a class="main-btn main-btn_orange main-btn_sign" href="{% url 'signup' %}">
+												<img src="{% static 'img/btn-sign.svg' %}" alt="btn-sign" />register
+											</a>
+										{% endif %}
+									</div>
+									
+                                    <div class="header-burger"> <span></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-2 d-lg-none">
+                            <div class="header-side">
+                                <div class="nicescroll-box">
+                                    <div class="wrap">
+                                        <div class="header-menu">
+                                            <a class="header-menu__item" href="{% url "index" %}">
+                                                <span>
+                                                    <i style="font-style: normal;">Home
+                                                    </i>
+                                                </span>main
+                                                <div class="header-menu__icon">
+                                                    <svg>
+                                                        <use xlink:href="assets/img/sprite.svg#arrow"></use>
+                                                    </svg>
+                                                </div>
+                                            </a>
+                                            <a class="header-menu__item" href="{% url "faq" %}">
+                                                <span>
+                                                    <i style="font-style: normal;">FAQ
+                                                    </i>
+                                                </span>answers
+                                                <div class="header-menu__icon">
+                                                    <svg>
+                                                        <use xlink:href="assets/img/sprite.svg#arrow"></use>
+                                                    </svg>
+                                                </div>
+                                            </a>
+
+                                            <a class="header-menu__item" href="{% url "terms" %}">
+                                                <span>
+                                                    <i style="font-style: normal;">Terms
+                                                    </i>
+                                                </span>rules
+                                                <div class="header-menu__icon">
+                                                    <svg>
+                                                        <use xlink:href="assets/img/sprite.svg#arrow"></use>
+                                                    </svg>
+                                                </div>
+                                            </a>
+                                            <a class="header-menu__item" href="{% url "contact" %}">
+                                                <span>
+                                                    <i style="font-style: normal;">Contacts
+                                                    </i>
+                                                </span>Support
+                                                <div class="header-menu__icon">
+                                                    <svg>
+                                                        <use xlink:href="assets/img/sprite.svg#arrow"></use>
+                                                    </svg>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="header-btns mt-4">
+											{% if user.is_authenticated %}
+												{% comment %} <p>Hello, {{ user.username }}!<span> {% endcomment %}
+													<a class="main-btn main-btn_line" href="{% url 'account' %}">
+														<img src="{% static 'img/btn-login.svg' %}" alt="btn-login" />dashboard
+													</a>
+												</span></p>
+											{% else %}
+												<a class="main-btn main-btn_line" href="{% url 'login' %}">
+													<img src="{% static 'img/btn-login.svg' %}" alt="btn-login" />login
+												</a>
+												<a class="main-btn main-btn_orange main-btn_sign" href="{% url 'signup' %}">
+													<img src="{% static 'img/btn-sign.svg' %}" alt="btn-sign" />register
+												</a>
+											{% endif %}
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            
+            {% endblock header %}
+        </div>
+		
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+
+		<!--Footer-->
+
+		<footer class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 offset-lg-12">
+						<div class="footer-wallets py-4 py-lg-5">
+							<div class="swiper-button-prev">
+								<svg>
+									<use xlink:href="{% static "img/sprite.svg#arrow" %}"></use>
+								</svg>
+							</div>
+							<div class="swiper-button-next">
+								<svg>
+									<use xlink:href="{% static "img/sprite.svg#arrow" %}"></use>
+								</svg>
+							</div>
+							<div class="swiper">
+								<div class="swiper-wrapper">
+
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/btc-white.svg" %}"
+												alt="btc-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/eth-white.svg" %}"
+												alt="eth-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/bch-white.svg" %}"
+												alt="xrp-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/ltc-white.svg" %}"
+												alt="ltc-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/sol-white.svg" %}"
+												alt="dash-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/doge-white.svg" %}"
+												alt="doge-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/trx-white.svg" %}"
+												alt="trx-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/usdt-white.svg" %}"
+												alt="usdt-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/bnb-white.svg" %}"
+												alt="bnb-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/xlm-white.svg" %}"
+												alt="epc-white" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-3 order-2 order-lg-1">
+						<div class="footer-bg"> <a class="footer-logo" href="{% url "index" %}"><img
+									src="{% static "img/logo-white.png" %}" alt="logo-white" /></a>
+							<div class="footer-text">
+								<p><strong class="footer-text__warning">Risk Warning:</strong> The performance of most
+									cryptoassets can be highly volatile, with their value dropping as quickly as it can
+									rise. You should be prepared to lose all the money you invest in cryptoassets. The
+									cryptoasset market is largely unregulated.</p>
+							</div>
+							<div class="footer-copy">Copyright © 2024 Radiant flip. All rights reserved</div>
+						</div>
+					</div>
+					<div class="col-lg-9 order-1 oreder-lg-2">
+						<div class="footer-bot">
+							<div class="row">
+								<div class="col-lg-4">
+									<div class="footer-title mt-0 mb-4">information</div>
+									<div class="footer-menu">
+										<a href="{% url "faq" %}">FAQs</a>
+										<a href="{% url "terms" %}">Terms</a>
+										<a href="{% url "contact" %}">Support</a>
+									</div>
+								</div>
+								<div class="col-lg-4 col-sm-6 mt-4 mt-lg-0">
+									<div class="footer-text">
+										<h3> <img src="{% static "img/f_ddos.svg" %}" width="42" alt="ddos" />DDOS Protection
+										</h3>
+										<p>Our website is protected by the most effective and modern
+											technologies in the field of countering DDoS attacks of any
+											etymology.</p>
+									</div>
+								</div>
+								<div class="col-lg-4 col-sm-6">
+									<div class="footer-text">
+										<h3> <img src="{% static "img/f_ssl.svg" %}" width="42" alt="ssl" />SSL Protection
+										</h3>
+										<p>Reliable SSL encryption to preserve a privacy of personal data and
+											the process of information exchange on our website.</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<div class="row">
+										<div class="col-sm-7">
+											<div class="footer-contacts mb-4 mb-lg-0"> <a href="javascript:void(0)">
+													<img src="{% static "img/footer-contacts-1.svg" %}"
+														alt="footer-contacts-1" />167-169
+													Great Portland St, London W1W 5PF, United Kingdom</a><a
+													href="javascript:void(0)"> <img
+														src="{% static "img/footer-contacts-2.svg" %}"
+														alt="footer-contacts-2" />support@radiantflip.com</a></div>
+										</div>
+										<div class="col-sm-5">
+											<div class="footer-links">
+												<div class="header-soc__links">
+
+													<a href="https://t.me/" target="_blank">
+														<svg>
+															<use xlink:href="assets/img/sprite.svg#tg"></use>
+														</svg>CHANNEL
+													</a>
+													<a href="https://t.me/" target="_blank">
+														<svg>
+															<use xlink:href="assets/img/sprite.svg#tg"></use>
+														</svg>GROUP
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+    <!-- Js files -->
+<script src="{% static "js/vendor.js" %}"></script>
+<script src="{% static "js/main.js" %}"></script>
+<script src="{% static "js/nicescroll.min.js" %}"></script>
+
+<script>
+    $(document).ready(function () {
+        // Define the minimum and maximum investment amounts
+        var minAmount = 300;
+        var maxAmount = 1000000;
+
+        // Listen for changes in the plan or amount fields
+        $('#cal_plan, #cal_amount').on('change keyup', function () {
+            calculateProfits();
+        });
+
+        function calculateProfits() {
+            // Get the selected plan and amount
+            var plan = $('#cal_plan').val();
+            var amount = parseFloat($('#cal_amount').val());
+
+            // Validate the amount
+            if (isNaN(amount) || amount < minAmount || amount > maxAmount) {
+                $('#daily_res').text('$0');
+                $('#total_res').text('$0');
+                return;
+            }
+
+            // Define the daily profit percentages for each plan
+            var dailyRates = {
+                1: 50,  // 200% for plan 1
+                2: 100,  // 300% for plan 2
+                3: 150,  // 400% for plan 3
+                4: 200   // 500% for plan 4
+            };
+
+            // Define the duration of each plan (in days)
+            var planDurations = {
+                1: 2,  // Plan 1 duration: 2 days
+                2: 3,  // Plan 2 duration: 3 days
+                3: 4,  // Plan 3 duration: 4 days
+                4: 5   // Plan 4 duration: 5 days
+            };
+
+            // Calculate the daily profit based on the percentage increase
+            var dailyProfit = amount * (dailyRates[plan] / 100); 
+            var totalProfit = dailyProfit * planDurations[plan]; 
+
+            // Update the result fields with the calculated profits
+            $('#daily_res').text('$' + dailyProfit.toFixed(2)); // Show daily profit with 2 decimal places
+            $('#total_res').text('$' + totalProfit.toFixed(2)); // Show total profit with 2 decimal places
+        }
+    });
+</script>
+
+
+<script src="{% static "js/spop.min.js" %}"></script>
+
+	<script type="text/javascript">
+		var country_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Chad", "Chile", "China", "Colombia", "Congo", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Gibraltar", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", , "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen"];
+		var name_list = ["Linda", "Bush", "Joe", "mark", "Noah", "Emma", "Liam", "Sophia", "Jacob", "Olivia", "Mason", "Isabella", "William", "Ava", "Ethan", "Mia", "Michael", "Abigail", "Alexander", "Emily", "James", "Madison", "Elijah", "Charlotte", "Daniel", "Elizabeth", "Benjamin", "Amelia", "Aiden", "Chloe", "Jayden", "Ella", "Logan", "Evelyn", "Matthew", "Avery", "David", "Sofia", "Joseph", "Harper", "Lucas", "Grace", "Jackson", "Addison", "Anthony", "Victoria", "Joshua", "Natalie", "Samuel", "Lily", "Andrew", "Aubrey", "Gabriel", "Lillian", "Christopher", "Zoey", "John", "Hannah", "Dylan", "Layla", "Carter", "Brooklyn", "Isaac", "Samantha", "Ryan", "Zoe", "Luke", "Leah", "Oliver", "Scarlett", "Nathan", "Riley", "Henry", "Camila", "Owen", "Savannah", "Caleb", "Anna", "Wyatt", "Audrey", "Christian", "Allison", "Sebastian", "Aria"];
+		function choice(array) {
+			return array[Math.floor(Math.random() * array.length)];
+		}
+		function randomNumber(min, max) {
+			return Math.random() * (max - min) + min;
+		}
+		function payinout() {
+			var nu = Math.floor(randomNumber(500, 10500));
+			var nam = choice(name_list);
+			var con = choice(country_list);
+			var mode = choice(['deposited', 'withdrew', 'reinvested', 'invested']);
+			spop({
+				template: nam + " from " + con + " " + mode + " $" + nu + " ...",
+				position: 'top-center',
+				style: 'success',
+				autoclose: 10000,
+			});
+		}
+		setInterval(payinout, 24000);
+	</script>
+	<!--footer section end-->
+
+	<div class="gtranslate_wrapper"></div>
+
+
+	<style>
+		.gt_float_switcher {
+			border-radius: 5px;
+			background: #d7d7d7;
+		}
+
+		.gt_float_switcher .gt-selected {
+			background-color: #fff;
+		}
+
+		.gt_float_switcher .gt-selected .gt-current-lang span.gt-lang-code {
+			font-family: "roboto slab", sans-serif;
+		}
+
+		.nturl {
+			font-size: 0;
+			color: transparent;
+		}
+
+		.nturl img {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.gt-lang-code {
+			font-size: 18px;
+		}
+	</style>
+	<script>window.gtranslateSettings = { "default_language": "en", "native_language_names": true, "languages": ["en", "ru", "fr", "de", "it", "es", "uk", "tr"], "wrapper_selector": ".gtranslate_wrapper", "float_switcher_open_direction": "right" }</script>
+
+	<script src="../../cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
+</body>
+
+</html>
