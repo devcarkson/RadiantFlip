@@ -1,6 +1,83 @@
 {% extends "dashnav.html" %}
-{% block title %}Dashboard | Radiant Flip{% endblock title %}
+{% block title %}Dashboard | Global Regional Strategy{% endblock title %}
 {% load static %}
+
+<style>
+    /* Referral Page Animations */
+    .uk-card {
+        animation: slideInUp 0.8s ease-out;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .uk-heading h1 {
+        animation: fadeInDown 1s ease-out;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .as-total-amount {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease;
+    }
+
+    .as-total-amount.animate {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .as-total-amount:nth-child(1) { animation-delay: 0.2s; }
+    .as-total-amount:nth-child(2) { animation-delay: 0.4s; }
+    .as-total-amount:nth-child(3) { animation-delay: 0.6s; }
+
+    .more-limit-banner {
+        animation: zoomIn 1s ease-out;
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .uk-input {
+        transition: border-color 0.3s ease;
+    }
+
+    .uk-input:focus {
+        border-color: #007cba;
+        box-shadow: 0 0 0 2px rgba(0,124,186,0.2);
+    }
+
+    .banners-banner__link {
+        transition: all 0.3s ease;
+    }
+
+    .banners-banner__link:hover {
+        transform: scale(1.05);
+        background-color: rgba(255,255,255,0.1);
+    }
+
+</style>
+
 {% block content %}
 <main id="as-main-my-deposit" class="uk-section-xsmall">
     <div class="uk-container uk-container-expand">
@@ -136,5 +213,24 @@
 
         </div>
     </div>
+
+    <script>
+        // Referral Page Animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalAmounts = document.querySelectorAll('.as-total-amount');
+
+            function animateAmounts() {
+                totalAmounts.forEach((amount, index) => {
+                    setTimeout(() => {
+                        amount.classList.add('animate');
+                    }, index * 200);
+                });
+            }
+
+            // Trigger animation after a short delay
+            setTimeout(animateAmounts, 500);
+        });
+    </script>
+
 </main>
 {% endblock %}

@@ -1,8 +1,91 @@
 {% extends "dashnav.html" %}
 {% load humanize %}
 
-{% block title %}Dashboard | Radiant Flip{% endblock title %}
+{% block title %}Dashboard | Global Regional Strategy{% endblock title %}
 {% load static %}
+
+<style>
+    /* Account Page Animations */
+    .uk-card {
+        animation: slideInUp 0.8s ease-out;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .js-stats-item li {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease;
+    }
+
+    .js-stats-item li.animate {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .js-stats-item li:nth-child(1) { animation-delay: 0.1s; }
+    .js-stats-item li:nth-child(2) { animation-delay: 0.2s; }
+    .js-stats-item li:nth-child(3) { animation-delay: 0.3s; }
+    .js-stats-item li:nth-child(4) { animation-delay: 0.4s; }
+
+    .uk-button {
+        transition: all 0.3s ease;
+    }
+
+    .uk-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .balance-stats-block-icon img {
+        transition: transform 0.3s ease;
+    }
+
+    .balance-stats-block-icon:hover img {
+        transform: rotate(360deg);
+    }
+
+    .week-limit-widget {
+        animation: fadeInScale 1s ease-out;
+    }
+
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .next-plan-widget {
+        animation: slideInRight 1.2s ease-out;
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+</style>
+
 {% block content %}
 <main id="as-main-dashboard" class="uk-section-xsmall">
     <div class="uk-container uk-container-expand uk-position-relative">
@@ -209,6 +292,25 @@
             </div>
 
         </section>
+
+        <script>
+            // Account Page Animations
+            document.addEventListener('DOMContentLoaded', function() {
+                const statsItems = document.querySelectorAll('.js-stats-item li');
+
+                function animateStats() {
+                    statsItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.classList.add('animate');
+                        }, index * 150);
+                    });
+                }
+
+                // Trigger animation after a short delay
+                setTimeout(animateStats, 500);
+            });
+        </script>
+
         <br> <br>
     </div>
 </main>

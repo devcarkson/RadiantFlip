@@ -184,17 +184,17 @@
 										alt="coin-ltc" />
 								</div>
 							</div>
-							<h1 class="header-title">Welcome to Radiant flip</h1>
+							<h1 class="header-title">Welcome to Global Regional Strategy</h1>
 							{% if user.is_authenticated %}
 								<div class="header-text">
 									<p>Empower Your Crypto Journey. Earn rewards, secure your static, and grow your wealth
-										with seamless staking solutions. Stake smart, stake with confidence.</p>
+										with seamless staking solutions. Stake smart, stake with confidence.</p><br><br>
 									<a class="main-btn main-btn_orange main-btn_big" href="{% url "stake" %}">Stake Now</a> <!-- Stake Now button for authenticated users -->
 								</div>
 							{% else %}
 								<div class="header-text">
 									<p>Empower Your Crypto Journey. Earn rewards, secure your static, and grow your wealth
-										with seamless staking solutions. Stake smart, stake with confidence.</p>
+										with seamless staking solutions. Stake smart, stake with confidence.</p><br><br>
 									<a class="main-btn main-btn_orange main-btn_big" href="{% url 'login' %}">Join us</a>
 								</div>
 							{% endif %}
@@ -210,14 +210,15 @@
 					<div class="col-lg-6 order-2 order-lg-1">
 						<div class="invest-plan">
 							<div class="invest-plan__list">
+								{% for plan in plans1 %}
 								<div class="invest-plan__item">
 									<div class="plan-item__icon">
-										<img src="{% static "img-new/plan1.svg" %}" alt="" style="height:42px">
+										<img src="{% static "img-new/plan{{ forloop.counter }}.svg" %}" alt="" style="height:42px">
 									</div>
-									<div class="text-white mb-2" style="color:white">LITE</div>
+									<div class="text-white mb-2" style="color:white">{{ plan.name }}</div>
 									<div class="invest-plan__head">
-										<div class="invest-plan__percent"> <span>50<sub>%</sub></span>
-											<p> daily for 48 hrs
+										<div class="invest-plan__percent"> <span>{{ plan.daily_percentage }}<sub>%</sub></span>
+											<p> daily for {{ plan.duration_hours }} hrs
 											</p>
 										</div>
 									</div>
@@ -226,56 +227,32 @@
 											<p>Principal Return<img src="{% static "img/calendar.svg" %}" alt="plan-info-1-1" />
 											</p>
 											<span>
-												Yes
+												{% if plan.principal_return %}Yes{% else %}No{% endif %}
 											</span>
 										</div>
 										<div class="invest-plan__info-item">
 											<p>min - max<img src="{% static "img/dollar.svg" %}" alt="plan-info-1-2" />
 											</p>
-											<span>$300 - $999</span>
+											<span>${{ plan.min_amount }}{% if plan.max_amount %} - ${{ plan.max_amount }}{% else %} - Unlimited{% endif %}</span>
 										</div>
 									</div>
 								</div>
-								<div class="invest-plan__item">
-									<div class="plan-item__icon">
-										<img src="{% static "img-new/plan2.svg" %}" alt="" style="height:42px">
-									</div>
-									<div class="text-white mb-2" style="color:white">STANDARD</div>
-									<div class="invest-plan__head">
-										<div class="invest-plan__percent"> <span>100<sub>%</sub></span>
-											<p> daily for 72 hrs
-											</p>
-										</div>
-									</div>
-									<div class="invest-plan__info">
-										<div class="invest-plan__info-item">
-											<p>Principal Return<img src="{% static "img/calendar.svg" %}" alt="plan-info-1-1" />
-											</p>
-											<span>
-												Yes
-											</span>
-										</div>
-										<div class="invest-plan__info-item">
-											<p>min - max<img src="{% static "img/dollar.svg" %}" alt="plan-info-1-2" />
-											</p>
-											<span>$1,000 - $4,999</span>
-										</div>
-									</div>
-								</div>
+								{% endfor %}
 							</div>
 
 						</div>
 
 						<div class="invest-plan mt-3">
 							<div class="invest-plan__list">
+								{% for plan in plans2 %}
 								<div class="invest-plan__item">
 									<div class="plan-item__icon">
-										<img src="{% static "img-new/plan3.svg" %}" alt="" style="height:42px">
+										<img src="{% static "img-new/plan{{ forloop.counter|add:2 }}.svg" %}" alt="" style="height:42px">
 									</div>
-									<div class="text-white mb-2" style="color:white">PREMIUM</div>
+									<div class="text-white mb-2" style="color:white">{{ plan.name }}</div>
 									<div class="invest-plan__head">
-										<div class="invest-plan__percent"> <span>150<sub>%</sub></span>
-											<p> daily for 96 hrs
+										<div class="invest-plan__percent"> <span>{{ plan.daily_percentage }}<sub>%</sub></span>
+											<p> daily for {{ plan.duration_hours }} hrs
 											</p>
 										</div>
 									</div>
@@ -284,43 +261,17 @@
 											<p>Principal Return<img src="{% static "img/calendar.svg" %}" alt="plan-info-1-1" />
 											</p>
 											<span>
-												Yes
+												{% if plan.principal_return %}Yes{% else %}No{% endif %}
 											</span>
 										</div>
 										<div class="invest-plan__info-item">
 											<p>min - max<img src="{% static "img/dollar.svg" %}" alt="plan-info-1-2" />
 											</p>
-											<span>$5,000 - $9,999</span>
+											<span>${{ plan.min_amount }}{% if plan.max_amount %} - ${{ plan.max_amount }}{% else %} - Unlimited{% endif %}</span>
 										</div>
 									</div>
 								</div>
-								<div class="invest-plan__item">
-									<div class="plan-item__icon">
-										<img src="{% static "img-new/plan4.svg" %}" alt="" style="height:42px">
-									</div>
-									<div class="text-white mb-2" style="color:white">DIAMOND</div>
-									<div class="invest-plan__head">
-
-										<div class="invest-plan__percent"> <span>200<sub>%</sub></span>
-											<p> daily for 120 hrs
-											</p>
-										</div>
-									</div>
-									<div class="invest-plan__info">
-										<div class="invest-plan__info-item">
-											<p>Principal Return<img src="{% static "img/calendar.svg" %}" alt="plan-info-1-1" />
-											</p>
-											<span>
-												Yes
-											</span>
-										</div>
-										<div class="invest-plan__info-item">
-											<p>min - max<img src="{% static "img/dollar.svg" %}" alt="plan-info-1-2" />
-											</p>
-											<span>$10,000 - $50,0000</span>
-										</div>
-									</div>
-								</div>
+								{% endfor %}
 							</div>
 
 						</div>
@@ -350,10 +301,11 @@
 										<label class="d-block cal-label text-white">Select Plan</label>
 										<select name="plan" id="cal_plan" style="min-width:200px; color: #048e2a"
 											class="cal-input__input">
-											<option value="1">50% DAILY FOR 48 HRS</option>
-											<option value="2">100% DAILY FOR 72 HRS</option>
-											<option value="3">150% DAILY FOR 96 HRS</option>
-											<option value="4">200% DAILY FOR 120 HRS</option>
+											{% for plan in plans %}
+											{% if plan %}
+											<option value="{{ forloop.counter }}">{{ plan.daily_percentage }}% DAILY FOR {{ plan.duration_hours }} HRS</option>
+											{% endif %}
+											{% endfor %}
 										</select>
 									</div>
 
@@ -409,7 +361,7 @@
 						<div class="refs-arrow"> <img src="{% static "img/refs-arrow.svg" %}" alt="refs-arrow" />
 						</div>
 						<div class="main-text">
-							<p>At Radiant flip, we are committed to transforming cryptocurrency staking into a
+							<p>At Global Regional Strategy, we are committed to transforming cryptocurrency staking into a
 								straightforward and rewarding experience for everyone. Our platform provides a
 								user-friendly, secure, and efficient way for individuals to stake their digital static
 								and earn rewards. By integrating cutting-edge technology with a focus on simplicity and
@@ -431,7 +383,7 @@
 									width="172" />
 							</div>
 							<div class="main-text">
-								<p>At Radiant flip, our vision is to democratize access to crypto staking and enable
+								<p>At Global Regional Strategy, our vision is to democratize access to crypto staking and enable
 									individuals globally to actively participate in the blockchain revolution. We
 									believe in a future where staking is a mainstream, accessible tool for wealth
 									generation, contributing to the security and decentralization of blockchain
@@ -448,7 +400,7 @@
 					<div class="col-lg-5 order-1">
 						<div class="main-title main-title_sm">
 							<div class="main-title__top"><span>Affiliate Program</span></div>
-							<div class="main-title__text">Earn Passive Income with Radiant flip</p>
+							<div class="main-title__text">Earn Passive Income with Global Regional Strategy</p>
 							</div>
 						</div>
 						<div class="why-text">
@@ -537,6 +489,10 @@
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-4 col-6">
+						<div class="partners-item"> <img src="{% static "img/partners-9.png" %}" alt="Gemini" />
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-4 col-6">
 						<div class="partners-item"> <img src="{% static "img/partners-1.png" %}" alt="partners-1" />
 						</div>
 					</div>
@@ -562,6 +518,18 @@
 					</div>
 					<div class="col-lg-3 col-md-4 col-6">
 						<div class="partners-item"> <img src="{% static "img/partners-7.png" %}" alt="partners-7" />
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-4 col-6">
+						<div class="partners-item"> <img src="{% static "img/partners-8.png" %}" alt="crypto.com" />
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-4 col-6">
+						<div class="partners-item"> <img src="{% static "img/partners-10.png" %}" alt="Kraken" />
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-4 col-6">
+						<div class="partners-item"> <img src="{% static "img/partners-11.png" %}" alt="Kraken" />
 						</div>
 					</div>
 				</div>
@@ -654,7 +622,7 @@
 									rise. You should be prepared to lose all the money you invest in cryptostatic. The
 									cryptoasset market is largely unregulated.</p>
 							</div>
-							<div class="footer-copy">Copyright © 2024 Radiant flip. All rights reserved</div>
+							<div class="footer-copy">Copyright © 2025 Global Regional Strategy. All rights reserved</div>
 						</div>
 					</div>
 					<div class="col-lg-9 order-1 oreder-lg-2">
@@ -693,10 +661,10 @@
 											<div class="footer-contacts mb-4 mb-lg-0"> <a href="javascript:void(0)">
 													<img src="{% static "img/footer-contacts-1.svg" %}"
 														alt="footer-contacts-1" />167-169
-													Great Portland St, London W1W 5PF, United Kingdom</a><a
+													Wilshire Blvd, Los Angeles, CA 90017, United States</a><a
 													href="javascript:void(0)"> <img
 														src="{% static "img/footer-contacts-2.svg" %}"
-														alt="footer-contacts-2" />support@radiantflip.com</a></div>
+														alt="footer-contacts-2" />support@globalregionalstrategy.com</a></div>
 										</div>
 										{% comment %} <div class="col-sm-5">
 											<div class="footer-links">
@@ -754,24 +722,15 @@
 				}
 
 				// Define the daily profit percentages for each plan
-				var dailyRates = {
-					1: 50,  // 200% for plan 1
-					2: 100,  // 300% for plan 2
-					3: 150,  // 400% for plan 3
-					4: 200   // 500% for plan 4
-				};
+				var dailyRates = {{ daily_rates|safe }};
 
-				// Define the duration of each plan (in days)
-				var planDurations = {
-					1: 2,  // Plan 1 duration: 2 days
-					2: 3,  // Plan 2 duration: 3 days
-					3: 4,  // Plan 3 duration: 4 days
-					4: 5   // Plan 4 duration: 5 days
-				};
+				// Define the duration of each plan (in hours)
+				var planDurations = {{ plan_durations|safe }};
 
 				// Calculate the daily profit based on the percentage increase
-				var dailyProfit = amount * (dailyRates[plan] / 100); 
-				var totalProfit = dailyProfit * planDurations[plan]; 
+				var dailyProfit = amount * (dailyRates[plan] / 100);
+				var totalDays = planDurations[plan] / 24;  // Convert hours to days
+				var totalProfit = dailyProfit * totalDays;
 
 				// Update the result fields with the calculated profits
 				$('#daily_res').text('$' + dailyProfit.toFixed(2)); // Show daily profit with 2 decimal places
@@ -838,10 +797,220 @@
 		.gt-lang-code {
 			font-size: 18px;
 		}
+
+		/* Global Animations */
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			animation: fadeIn 1s ease-in;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		/* Header Animations */
+		.header-title {
+			animation: slideInUp 1.2s ease-out;
+		}
+
+		.header-text {
+			animation: slideInUp 1.4s ease-out;
+		}
+
+		.main-btn {
+			transition: all 0.3s ease;
+		}
+
+		.main-btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+		}
+
+		/* Invest Section Animations */
+		.invest-plan__item {
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+
+		.invest-plan__item:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+		}
+
+		.cal-res__item {
+			animation: bounceIn 0.8s ease-out;
+		}
+
+		@keyframes bounceIn {
+			0% { transform: scale(0.3); opacity: 0; }
+			50% { transform: scale(1.05); }
+			70% { transform: scale(0.9); }
+			100% { transform: scale(1); opacity: 1; }
+		}
+
+		/* About Section Animations */
+		.about-img {
+			animation: zoomIn 1.5s ease-out;
+		}
+
+		@keyframes zoomIn {
+			from { transform: scale(0.8); opacity: 0; }
+			to { transform: scale(1); opacity: 1; }
+		}
+
+		.main-text {
+			animation: slideInRight 1.3s ease-out;
+		}
+
+		@keyframes slideInRight {
+			from {
+				opacity: 0;
+				transform: translateX(50px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		/* Why Section Animations */
+		.why-box-top .why-list__item {
+			opacity: 0;
+			animation: fadeInUp 0.8s ease-out forwards;
+		}
+
+		.why-list__item:nth-child(1) { animation-delay: 0.2s; }
+		.why-list__item:nth-child(2) { animation-delay: 0.4s; }
+		.why-list__item:nth-child(3) { animation-delay: 0.6s; }
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.why-rate__item {
+			transition: transform 0.3s ease;
+		}
+
+		.why-rate__item:hover {
+			transform: scale(1.05);
+		}
+
+		/* Partners Animation */
+		.partners-item {
+			opacity: 0;
+			transform: translateY(30px);
+			transition: all 0.6s ease;
+		}
+
+		.partners-item.animate {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		.partners-item:nth-child(1) { animation-delay: 0.1s; }
+		.partners-item:nth-child(2) { animation-delay: 0.2s; }
+		.partners-item:nth-child(3) { animation-delay: 0.3s; }
+		.partners-item:nth-child(4) { animation-delay: 0.4s; }
+		.partners-item:nth-child(5) { animation-delay: 0.5s; }
+		.partners-item:nth-child(6) { animation-delay: 0.6s; }
+		.partners-item:nth-child(7) { animation-delay: 0.7s; }
+		.partners-item:nth-child(8) { animation-delay: 0.8s; }
+		.partners-item:nth-child(9) { animation-delay: 0.9s; }
+		.partners-item:nth-child(10) { animation-delay: 1.0s; }
+
+		.partners-item img {
+			transition: transform 0.3s ease, filter 0.3s ease;
+		}
+
+		.partners-item:hover img {
+			transform: scale(1.1);
+			filter: brightness(1.2);
+		}
+
+		.partners-title {
+			animation: slideInLeft 1s ease-out;
+		}
+
+		@keyframes slideInLeft {
+			from {
+				opacity: 0;
+				transform: translateX(-50px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		/* Footer Animations */
+		.footer-wallets__item {
+			transition: transform 0.3s ease;
+		}
+
+		.footer-wallets__item:hover {
+			transform: rotateY(180deg);
+		}
+
+		.footer-text h3 {
+			animation: pulse 2s infinite;
+		}
+
+		@keyframes pulse {
+			0% { transform: scale(1); }
+			50% { transform: scale(1.05); }
+			100% { transform: scale(1); }
+		}
 	</style>
 	<script>window.gtranslateSettings = { "default_language": "en", "native_language_names": true, "languages": ["en", "ru", "fr", "de", "it", "es", "uk", "tr"], "wrapper_selector": ".gtranslate_wrapper", "float_switcher_open_direction": "right" }</script>
 
 	<script src="../../cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
+	<script>
+		// Partners Animation Script
+		document.addEventListener('DOMContentLoaded', function() {
+			const partnersItems = document.querySelectorAll('.partners-item');
+			const partnersTitle = document.querySelector('.partners-title');
+
+			function animateOnScroll() {
+				const scrollTop = window.pageYOffset;
+				const windowHeight = window.innerHeight;
+
+				// Animate title
+				if (partnersTitle) {
+					const titleRect = partnersTitle.getBoundingClientRect();
+					if (titleRect.top < windowHeight - 100) {
+						partnersTitle.style.animationPlayState = 'running';
+					}
+				}
+
+				// Animate partner items
+				partnersItems.forEach((item, index) => {
+					const rect = item.getBoundingClientRect();
+					if (rect.top < windowHeight - 100) {
+						setTimeout(() => {
+							item.classList.add('animate');
+						}, index * 100);
+					}
+				});
+			}
+
+			// Initial check
+			animateOnScroll();
+
+			// Listen for scroll events
+			window.addEventListener('scroll', animateOnScroll);
+		});
+	</script>
 
 </body>
 

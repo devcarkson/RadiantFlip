@@ -1,6 +1,90 @@
 {% extends "dashnav.html" %}
-{% block title %}Comfirm deposit | Radiant Flip{% endblock title %}
+{% block title %}Confirm deposit | Global Regional Strategy{% endblock title %}
 {% load static %}
+
+<style>
+    /* Confirm Deposit Page Animations */
+    .uk-card {
+        animation: slideInUp 0.8s ease-out;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .uk-heading h1 {
+        animation: fadeInDown 1s ease-out;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .table tr {
+        opacity: 0;
+        animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    .table tr:nth-child(1) { animation-delay: 0.1s; }
+    .table tr:nth-child(2) { animation-delay: 0.2s; }
+    .table tr:nth-child(3) { animation-delay: 0.3s; }
+    .table tr:nth-child(4) { animation-delay: 0.4s; }
+    .table tr:nth-child(5) { animation-delay: 0.5s; }
+    .table tr:nth-child(6) { animation-delay: 0.6s; }
+    .table tr:nth-child(7) { animation-delay: 0.7s; }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .uk-button {
+        transition: all 0.3s ease;
+        animation: pulse 2s infinite;
+    }
+
+    .uk-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+    }
+
+    #coin_payment_image {
+        animation: zoomIn 1.5s ease-out;
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+</style>
+
 {% block content %}
 <main id="as-main-deposit" class="uk-section-xsmall">
     <header class="uk-heading uk-text-center uk-margin-small-bottom">
@@ -23,7 +107,7 @@
                                 </tr>
                                 <tr>
                                     <th>Profit:</th>
-                                    <td>{{ staking_plan_display }} Daily</td>
+                                    <td>{{ percentage }}% Daily</td>
                                 </tr>
                                 <tr>
                                     <th>Principal Return:</th>

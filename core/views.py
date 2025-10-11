@@ -1,4 +1,4 @@
-from audioop import reverse
+# from audioop import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
@@ -78,7 +78,32 @@ def convert_to_crypto(amount_in_usd, payment_system):
 
 
 def index(request):
-    context ={}
+    # Get investment plans in order for homepage display
+    plan_names = ['LITE', 'STANDARD', 'PREMIUM', 'DIAMOND']
+    plans = []
+    for name in plan_names:
+        try:
+            plan = InvestmentPlan.objects.get(name=name)
+            plans.append(plan)
+        except InvestmentPlan.DoesNotExist:
+            plans.append(None)
+
+    # Prepare data for calculator
+    import json
+    daily_rates = {}
+    plan_durations = {}
+    for i, plan in enumerate(plans, 1):
+        if plan:
+            daily_rates[i] = plan.daily_percentage
+            plan_durations[i] = plan.duration_hours
+
+    context = {
+        'plans': plans,
+        'plans1': plans[:2],
+        'plans2': plans[2:],
+        'daily_rates': json.dumps(daily_rates),
+        'plan_durations': json.dumps(plan_durations)
+    }
     return render(request, 'index.html', context)
 
 def faq(request):
@@ -106,7 +131,7 @@ def contact(request):
             contact = form.save() 
 
             # Notify admin about new contact form submission
-            admin_email_subject = 'New Contact Form Submission at Radiant Flip'
+            admin_email_subject = 'New Contact Form Submission at Global Regional Strategy'
             admin_email_message = (
                 f"A new contact form submission has been received.\n\n"
                 f"Name: {contact.name}\n"
@@ -115,12 +140,30 @@ def contact(request):
                 f"Please review the submission details."
             )
 
+            plain_message = admin_email_message
+
+            html_message = f"""
+            <html>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                <h2 style="color: #28a745;">New Contact Form Submission</h2>
+                <p>A new contact form has been submitted on Global Regional Strategy:</p>
+                <table style="border-collapse: collapse; width: 100%; max-width: 400px;">
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Name:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{contact.name}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Email:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{contact.email}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Message:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{contact.message}</td></tr>
+                </table>
+                <p>Please respond to this inquiry as soon as possible.</p>
+            </body>
+            </html>
+            """
+
             # Send notification email to all admin emails
             send_mail(
                 admin_email_subject,
-                admin_email_message,
-                'Radiant Flip <info@bitekexchange.com>',  # Use your desired sender name and email
-                settings.ADMIN_EMAILS, 
+                plain_message,
+                'Global Regional Strategy <info@kennylass.com.ng>',  # Use your desired sender name and email
+                list(settings.ADMIN_EMAILS),
+                html_message=html_message,
                 fail_silently=False,
             )
 
@@ -164,13 +207,16 @@ def signup(request):
                 agree=user_form.cleaned_data['agree']
             )
 
+            # Create UserBalance
+            UserBalance.objects.create(user=user, balance=Decimal('0.00'))
+
             # Generate activation token
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
 
             # Send activation email to user
             current_site = get_current_site(request)
-            mail_subject = 'Activate your Radiant Flip account'
+            mail_subject = 'Activate your Global Regional Strategy account'
             
             # Render the HTML template for the email
             html_message = render_to_string('activation_email.html', {
@@ -184,22 +230,40 @@ def signup(request):
             email = EmailMultiAlternatives(
                 subject=mail_subject,
                 body="Please use an email client that supports HTML to view this email.",
-                from_email='Radiant Flip <info@bitekexchange.com>',
+                from_email='Global Regional Strategy <info@kennylass.com.ng>',
                 to=[user.email],
             )
             email.attach_alternative(html_message, "text/html")
             email.send()
 
             # Notify admin about new user registration
-            admin_email_subject = 'New User Registration at Radiant Flip'
-            admin_email_message = f"A new user has registered on Radiant Flip.\n\nUsername: {user.username}\nEmail: {user.email}\nFull Name: {user_form.cleaned_data['fullname']}\n\nPlease review the user registration details."
+            admin_email_subject = 'New User Registration at Global Regional Strategy'
+            admin_email_message = f"A new user has registered on Global Regional Strategy.\n\nUsername: {user.username}\nEmail: {user.email}\nFull Name: {user_form.cleaned_data['fullname']}\n\nPlease review the user registration details."
+
+            plain_message = admin_email_message
+
+            html_message = f"""
+            <html>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                <h2 style="color: #17a2b8;">New User Registration</h2>
+                <p>A new user has registered on Global Regional Strategy:</p>
+                <table style="border-collapse: collapse; width: 100%; max-width: 400px;">
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Username:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{user.username}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Email:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{user.email}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Full Name:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{user_form.cleaned_data['fullname']}</td></tr>
+                </table>
+                <p>Please review the user details in the admin panel.</p>
+            </body>
+            </html>
+            """
 
             # Send notification email to all admin emails
             send_mail(
                 admin_email_subject,
-                admin_email_message,
-                'Radiant Flip <info@bitekexchange.com>',
-                settings.ADMIN_EMAILS,  # This should be a list or tuple
+                plain_message,
+                'Global Regional Strategy <info@kennylass.com.ng>',
+                list(settings.ADMIN_EMAILS),
+                html_message=html_message,
                 fail_silently=False,
             )
 
@@ -242,7 +306,7 @@ def activate(request, uidb64, token):
         return redirect('login')
     else:
         messages.error(request, 'Activation link is invalid!')
-        return render(request, 'ctivation_email.html')
+        return render(request, 'activation_email.html')
 
 
 
@@ -311,7 +375,7 @@ def forgottenpassword(request):
                 c = {
                     "email": user.email,
                     "domain": request.META['HTTP_HOST'],
-                    "site_name": "Radiant Flip",
+                    "site_name": "Global Regional Strategy",
                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),  # Ensure uid is encoded
                     "user": user,
                     "token": default_token_generator.make_token(user),
@@ -323,7 +387,7 @@ def forgottenpassword(request):
                 send_mail(
                     subject,
                     message="This is a plain text fallback message.",
-                    from_email='Radiant Flip <info@bitekexchange.com>',
+                    from_email='Global Regional Strategy <info@kennylass.com.ng>',
                     recipient_list=[user.email],
                     html_message=email_message,
                     fail_silently=False
@@ -429,7 +493,7 @@ def get_wallet_address(request):
         try:
             # Fetch the wallet address for the selected payment system
             wallet = Wallet.objects.get(payment_method=payment_system)
-            return JsonResponse({'wallet_address': wallet.address}, status=200)
+            return JsonResponse({'wallet_address': wallet.wallet_address}, status=200)
         except Wallet.DoesNotExist:
             return JsonResponse({'error': 'Wallet not found'}, status=404)
     return JsonResponse({'error': 'Invalid request'}, status=400)
@@ -479,7 +543,17 @@ def deposit(request):
     else:
         form = DepositForm()
 
-    return render(request, 'deposit.html', {'form': form, 'pending': False})
+    # Get investment plans in order
+    plan_names = ['LITE', 'STANDARD', 'PREMIUM', 'DIAMOND']
+    plans = []
+    for name in plan_names:
+        try:
+            plan = InvestmentPlan.objects.get(name=name)
+            plans.append(plan)
+        except InvestmentPlan.DoesNotExist:
+            plans.append(None)
+
+    return render(request, 'deposit.html', {'form': form, 'pending': False, 'plans': plans})
 
 
 
@@ -527,22 +601,100 @@ def confirm_deposit(request):
         )
         deposit.save()
 
+        # Get plan percentage for emails
+        plan_names = {1: 'LITE', 2: 'STANDARD', 3: 'PREMIUM', 4: 'DIAMOND'}
+        plan_name = plan_names.get(deposit.staking_plan)
+        percentage = 0
+        if plan_name:
+            try:
+                plan = InvestmentPlan.objects.get(name=plan_name)
+                percentage = plan.daily_percentage
+            except InvestmentPlan.DoesNotExist:
+                percentage = 0
+        staking_plan_with_percent = f"{deposit.get_staking_plan_display()} {percentage}%"
+
         # Notify the admin via email about the new deposit
-        admin_email = settings.ADMIN_EMAILS  
-        sender_name = "Radiant Flip"  
-        sender_email = settings.DEFAULT_FROM_EMAIL 
-        formatted_from_email = f"{sender_name} <{sender_email}>" 
+        admin_emails = list(settings.ADMIN_EMAILS)
+        formatted_from_email = settings.DEFAULT_FROM_EMAIL
+
+        plain_message = f"A new deposit has been made:\n\n" \
+                        f"User: {request.user.username}\n" \
+                        f"Amount: {deposit.amount}\n" \
+                        f"Payment System: {deposit.get_payment_system_display()}\n" \
+                        f"Crypto Amount: {deposit.crypto_amount}\n" \
+                        f"Staking Plan: {staking_plan_with_percent}\n"
+
+        html_message = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <h2 style="color: #007bff;">New Deposit Notification</h2>
+            <p>A new deposit has been made on Global Regional Strategy:</p>
+            <table style="border-collapse: collapse; width: 100%; max-width: 400px;">
+                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>User:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{request.user.username}</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${deposit.amount}</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Payment System:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{deposit.get_payment_system_display()}</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Crypto Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{deposit.crypto_amount}</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Staking Plan:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{staking_plan_with_percent}</td></tr>
+            </table>
+            <p>Please review this deposit in the admin panel.</p>
+        </body>
+        </html>
+        """
 
         send_mail(
             subject=f'New Deposit by {request.user.username}',
-            message=f"A new deposit has been made:\n\n"
-                    f"User: {request.user.username}\n"
-                    f"Amount: {deposit.amount}\n"
-                    f"Payment System: {deposit.get_payment_system_display()}\n"
-                    f"Crypto Amount: {deposit.crypto_amount}\n"
-                    f"Staking Plan: {deposit.get_staking_plan_display()}\n",
-            from_email=formatted_from_email, 
-            recipient_list=[admin_email],
+            message=plain_message,
+            from_email=formatted_from_email,
+            recipient_list=admin_emails,
+            html_message=html_message,
+            fail_silently=False,
+        )
+
+        # Send notification email to user about pending deposit
+        user_plain_message = f"Dear {request.user.username},\n\n" \
+                            f"Your deposit request has been submitted successfully.\n\n" \
+                            f"Details:\n" \
+                            f"Amount: ${deposit.amount}\n" \
+                            f"Payment System: {deposit.get_payment_system_display()}\n" \
+                            f"Crypto Amount: {deposit.crypto_amount}\n" \
+                            f"Staking Plan: {staking_plan_with_percent}\n\n" \
+                            f"Status: Pending\n\n" \
+                            f"Your deposit is currently under review. You will receive a confirmation email once it has been processed.\n\n" \
+                            f"Thank you for choosing Global Regional Strategy!"
+
+        user_html_message = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
+                <h2 style="color: #007bff; text-align: center;">Deposit Request Submitted</h2>
+                <p>Dear {request.user.username},</p>
+                <p>Your deposit request has been submitted successfully on Global Regional Strategy.</p>
+                <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                    <h3>Deposit Details:</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${deposit.amount}</td></tr>
+                        <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Payment System:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{deposit.get_payment_system_display()}</td></tr>
+                        <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Crypto Amount:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{deposit.crypto_amount}</td></tr>
+                        <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Staking Plan:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{staking_plan_with_percent}</td></tr>
+                        <tr><td style="padding: 8px;"><strong>Status:</strong></td><td style="padding: 8px;"><span style="color: #ffc107; font-weight: bold;">Pending Review</span></td></tr>
+                    </table>
+                </div>
+                <p>Your deposit is currently under review. You will receive a confirmation email once it has been processed.</p>
+                <p>Thank you for choosing Global Regional Strategy!</p>
+                <div style="text-align: center; margin-top: 30px; color: #6c757d; font-size: 12px;">
+                    <p>&copy; 2025 Global Regional Strategy. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        send_mail(
+            subject='Deposit Request Submitted - Global Regional Strategy',
+            message=user_plain_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[request.user.email],
+            html_message=user_html_message,
             fail_silently=False,
         )
 
@@ -552,14 +704,24 @@ def confirm_deposit(request):
         messages.success(request, "Deposit confirmed and saved successfully!")
         return redirect('account')
 
-    # Retrieve the staking plan display name
-    staking_plan_display = dict(Deposit.PLAN_CHOICES).get(deposit_data['staking_plan'], 'Unknown Plan')
+    # Get dynamic plan details
+    plan_names = {1: 'LITE', 2: 'STANDARD', 3: 'PREMIUM', 4: 'DIAMOND'}
+    plan_name = plan_names.get(deposit_data['staking_plan'], 'Unknown')
+    percentage = 0
+    if plan_name != 'Unknown':
+        try:
+            plan = InvestmentPlan.objects.get(name=plan_name)
+            percentage = plan.daily_percentage
+        except InvestmentPlan.DoesNotExist:
+            percentage = 0
+    staking_plan_display = f"{plan_name} {percentage}%"
 
     return render(request, 'confirm_deposit.html', {
         'deposit_data': deposit_data,
         'staking_plan_display': staking_plan_display,
+        'percentage': percentage,
         'wallet_address': wallet_address,
-        'site_name': "Radiant Flip"
+        'site_name': "Global Regional Strategy"
     })
 
 
@@ -584,7 +746,7 @@ def history(request):
         (9, 'Sep'), (10, 'Oct'), (11, 'Nov'), (12, 'Dec')
     ]
     days = list(range(1, 32))
-    years = [2023, 2024]
+    years = [2023, 2024, 2025]
 
     # Get filter inputs from GET request
     transaction_type = request.GET.get('type', 'all')
@@ -828,19 +990,79 @@ def withdrawal(request):
             withdrawal.save()
 
             # Notify the admin via email about the new withdrawal
-            admin_email = settings.ADMIN_EMAILS  
-            sender_name = "Radiant Flip"  
-            sender_email = settings.DEFAULT_FROM_EMAIL 
-            formatted_from_email = f"{sender_name} <{sender_email}>" 
+            admin_emails = list(settings.ADMIN_EMAILS)
+            formatted_from_email = settings.DEFAULT_FROM_EMAIL
+
+            plain_message = f"A new withdrawal has been requested:\n\n" \
+                            f"User: {request.user.username}\n" \
+                            f"Amount: ${withdrawal.amount}\n" \
+                            f"Wallet Address: {withdrawal.wallet_address}\n"
+
+            html_message = f"""
+            <html>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                <h2 style="color: #dc3545;">New Withdrawal Request</h2>
+                <p>A new withdrawal request has been submitted on Global Regional Strategy:</p>
+                <table style="border-collapse: collapse; width: 100%; max-width: 400px;">
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>User:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{request.user.username}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${withdrawal.amount}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Wallet Address:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{withdrawal.wallet_address}</td></tr>
+                </table>
+                <p>Please review and approve/reject this withdrawal in the admin panel.</p>
+            </body>
+            </html>
+            """
 
             send_mail(
                 subject=f'New Withdrawal Request from {request.user.username}',
-                message=f"A new withdrawal has been requested:\n\n"
-                        f"User: {request.user.username}\n"
-                        f"Amount: {withdrawal.amount}\n"
-                        f"Wallet Address: {withdrawal.wallet_address}\n",
-                from_email=formatted_from_email, 
-                recipient_list=[admin_email],
+                message=plain_message,
+                from_email=formatted_from_email,
+                recipient_list=admin_emails,
+                html_message=html_message,
+                fail_silently=False,
+            )
+
+            # Send notification email to user about pending withdrawal
+            user_plain_message = f"Dear {request.user.username},\n\n" \
+                                f"Your withdrawal request has been submitted successfully.\n\n" \
+                                f"Details:\n" \
+                                f"Amount: ${withdrawal.amount}\n" \
+                                f"Wallet Address: {withdrawal.wallet_address}\n\n" \
+                                f"Status: Pending Review\n\n" \
+                                f"Your withdrawal request is currently under review. You will receive a confirmation email once it has been processed.\n\n" \
+                                f"Thank you for choosing Global Regional Strategy!"
+
+            user_html_message = f"""
+            <html>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                <div style="max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
+                    <h2 style="color: #dc3545; text-align: center;">Withdrawal Request Submitted</h2>
+                    <p>Dear {request.user.username},</p>
+                    <p>Your withdrawal request has been submitted successfully on Global Regional Strategy.</p>
+                    <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                        <h3>Withdrawal Details:</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${withdrawal.amount}</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Wallet Address:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{withdrawal.wallet_address}</td></tr>
+                            <tr><td style="padding: 8px;"><strong>Status:</strong></td><td style="padding: 8px;"><span style="color: #ffc107; font-weight: bold;">Pending Review</span></td></tr>
+                        </table>
+                    </div>
+                    <p>Your withdrawal request is currently under review. You will receive a confirmation email once it has been processed.</p>
+                    <p>Thank you for choosing Global Regional Strategy!</p>
+                    <div style="text-align: center; margin-top: 30px; color: #6c757d; font-size: 12px;">
+                        <p>&copy; 2025 Global Regional Strategy. All rights reserved.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+
+            send_mail(
+                subject='Withdrawal Request Submitted - Global Regional Strategy',
+                message=user_plain_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[request.user.email],
+                html_message=user_html_message,
                 fail_silently=False,
             )
 
@@ -851,7 +1073,7 @@ def withdrawal(request):
             }
 
             # Redirect to confirmation page
-            messages.success(request, "Withdrawal placeed  successfully!")
+            messages.success(request, "Withdrawal placed successfully!")
             return redirect('account')
             
         else:
@@ -900,7 +1122,11 @@ def stake(request):
             return redirect('stake')
 
         # Get the user's balance
-        user_balance = UserBalance.objects.get(user=request.user)
+        try:
+            user_balance = UserBalance.objects.get(user=request.user)
+        except UserBalance.DoesNotExist:
+            messages.error(request, "User balance not found.")
+            return redirect('stake')
 
         # Check if the user has enough balance
         if user_balance.balance < amount:
@@ -912,10 +1138,109 @@ def stake(request):
         user_balance.save()
 
         # Create the stake
-        Stake.objects.create(user=request.user, plan=plan, amount=amount)
+        stake = Stake.objects.create(user=request.user, plan=plan, amount=amount)
+
+        # Send confirmation email to user
+        user_plain_message = f"Dear {request.user.username},\n\n" \
+                            f"Congratulations! Your staking has been processed successfully.\n\n" \
+                            f"Staking Details:\n" \
+                            f"Amount: ${stake.amount}\n" \
+                            f"Plan: {plan.get_name_display()} ({plan.daily_percentage}% daily)\n" \
+                            f"Date Staked: {stake.date_staked.strftime('%Y-%m-%d %H:%M:%S')}\n\n" \
+                            f"You will start earning daily returns based on your selected plan.\n\n" \
+                            f"Thank you for choosing Global Regional Strategy!"
+
+        user_html_message = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
+                <h2 style="color: #28a745; text-align: center;">Staking Confirmed!</h2>
+                <p>Dear {request.user.username},</p>
+                <p>Congratulations! Your staking has been processed successfully on Global Regional Strategy.</p>
+                <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                    <h3>Staking Details:</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${stake.amount}</td></tr>
+                        <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Plan:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">{plan.get_name_display()} ({plan.daily_percentage}% daily)</td></tr>
+                        <tr><td style="padding: 8px;"><strong>Date Staked:</strong></td><td style="padding: 8px;">{stake.date_staked.strftime('%Y-%m-%d %H:%M:%S')}</td></tr>
+                    </table>
+                </div>
+                <p>You will start earning daily returns based on your selected plan.</p>
+                <p>Thank you for choosing Global Regional Strategy!</p>
+                <div style="text-align: center; margin-top: 30px; color: #6c757d; font-size: 12px;">
+                    <p>&copy; 2025 Global Regional Strategy. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        send_mail(
+            subject='Staking Confirmed - Global Regional Strategy',
+            message=user_plain_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[request.user.email],
+            html_message=user_html_message,
+            fail_silently=False,
+        )
+
+        # Notify admin about new stake
+        admin_plain_message = f"A new staking has been made:\n\n" \
+                             f"User: {request.user.username}\n" \
+                             f"Amount: ${stake.amount}\n" \
+                             f"Plan: {plan.get_name_display()} ({plan.daily_percentage}% daily)\n" \
+                             f"Date Staked: {stake.date_staked.strftime('%Y-%m-%d %H:%M:%S')}\n"
+
+        admin_html_message = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <h2 style="color: #17a2b8;">New Staking Notification</h2>
+            <p>A new staking has been made on Global Regional Strategy:</p>
+            <table style="border-collapse: collapse; width: 100%; max-width: 400px;">
+                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>User:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{request.user.username}</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${stake.amount}</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Plan:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">{plan.get_name_display()} ({plan.daily_percentage}% daily)</td></tr>
+                <tr><td style="padding: 8px;"><strong>Date Staked:</strong></td><td style="padding: 8px;">{stake.date_staked.strftime('%Y-%m-%d %H:%M:%S')}</td></tr>
+            </table>
+            <p>Please review the staking details.</p>
+        </body>
+        </html>
+        """
+
+        send_mail(
+            subject=f'New Staking by {request.user.username}',
+            message=admin_plain_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=list(settings.ADMIN_EMAILS),
+            html_message=admin_html_message,
+            fail_silently=False,
+        )
+
         messages.success(request, f"You have successfully staked ${amount} in the {plan.get_name_display()}.")
         return redirect('account')  # Ensure 'account' is the correct URL for the next page
 
     # Render the page if the request is GET
-    plans = InvestmentPlan.objects.all()
-    return render(request, 'invest.html', {'plans': plans})
+    plan_names = ['LITE', 'STANDARD', 'PREMIUM', 'DIAMOND']
+    plans = []
+    for name in plan_names:
+        try:
+            plan = InvestmentPlan.objects.get(name=name)
+            plans.append(plan)
+        except InvestmentPlan.DoesNotExist:
+            plans.append(None)
+
+    # Prepare data for calculator
+    import json
+    daily_rates = {}
+    plan_durations = {}
+    for i, plan in enumerate(plans, 1):
+        if plan:
+            daily_rates[i] = plan.daily_percentage
+            plan_durations[i] = plan.duration_hours
+
+    context = {
+        'plans': plans,
+        'daily_rates': json.dumps(daily_rates),
+        'plan_durations': json.dumps(plan_durations)
+    }
+    return render(request, 'invest.html', context)

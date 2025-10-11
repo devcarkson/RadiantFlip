@@ -7,16 +7,77 @@
 
 <style>
     .custom-btn {
-        background-color: #f67942; 
-        border: none; 
-        font-weight:bold
+        background-color: #f67942;
+        border: none;
+        font-weight:bold;
+        transition: all 0.3s ease;
     }
     .custom-btn:hover{
         background-color:rgb(83 255 131);
         color:black;
-        font-weight:bold
+        font-weight:bold;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
-    
+
+    /* Invest Page Animations */
+    .invest-plan__item {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease;
+    }
+
+    .invest-plan__item.animate {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .invest-plan__item:nth-child(1) { animation-delay: 0.2s; }
+    .invest-plan__item:nth-child(2) { animation-delay: 0.4s; }
+    .invest-plan__item:nth-child(3) { animation-delay: 0.6s; }
+    .invest-plan__item:nth-child(4) { animation-delay: 0.8s; }
+
+    .invest-wrap {
+        animation: slideInUp 1s ease-out;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .calbox {
+        animation: zoomIn 1.2s ease-out;
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .cal-res__item {
+        transition: transform 0.3s ease;
+    }
+
+    .cal-res__item:hover {
+        transform: scale(1.1);
+    }
+
+    .invest-tabs__item {
+        transition: all 0.3s ease;
+    }
+
+    .invest-tabs__item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
 </style>
 <header class="uk-heading uk-text-center uk-margin-small-bottom">
     <h1 class="uk-heading-line">Stake Now </h1>
@@ -201,10 +262,11 @@
                                 <label class="d-block cal-label text-white">Select Plan</label>
                                 <select name="plan" id="cal_plan" style="min-width:200px; color: #048e2a"
                                     class="cal-input__input">
-                                    <option value="1">50% DAILY FOR 48 HRS</option>
-                                    <option value="2">100% DAILY FOR 72 HRS</option>
-                                    <option value="3">150% DAILY FOR 96 HRS</option>
-                                    <option value="4">200% DAILY FOR 120 HRS</option>
+                                    {% for plan in plans %}
+                                    {% if plan %}
+                                    <option value="{{ forloop.counter }}">{{ plan.daily_percentage }}% DAILY FOR {{ plan.duration_hours }} HRS</option>
+                                    {% endif %}
+                                    {% endfor %}
                                 </select>
                             </div>
 
@@ -249,5 +311,69 @@
 </section>
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-RoSGddFrpIVzUoslnGgXG1LIUurOTFSpi9C3Ra/xVeyZjO2HX5vOymUdJq+kT2Gy" crossorigin="anonymous"></script>
+
+<script>
+    // Invest Page Animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const investItems = document.querySelectorAll('.invest-plan__item');
+
+        function animateOnScroll() {
+            const scrollTop = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+
+            investItems.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < windowHeight - 100) {
+                    setTimeout(() => {
+                        item.classList.add('animate');
+                    }, index * 200);
+                }
+            });
+        }
+
+        // Initial check
+        animateOnScroll();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', animateOnScroll);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Define the daily profit percentages for each plan
+        var dailyRates = {{ daily_rates|safe }};
+
+        // Define the duration of each plan (in hours)
+        var planDurations = {{ plan_durations|safe }};
+
+        // Listen for changes in the plan or amount fields
+        $('#cal_plan, #cal_amount').on('change keyup', function () {
+            calculateProfits();
+        });
+
+        function calculateProfits() {
+            // Get the selected plan and amount
+            var plan = $('#cal_plan').val();
+            var amount = parseFloat($('#cal_amount').val());
+
+            // Validate the amount
+            if (isNaN(amount) || amount < 0) {
+                $('#daily_res').text('$0');
+                $('#total_res').text('$0');
+                return;
+            }
+
+            // Calculate the daily profit based on the percentage increase
+            var dailyProfit = amount * (dailyRates[plan] / 100);
+            var totalDays = planDurations[plan] / 24;  // Convert hours to days
+            var totalProfit = dailyProfit * totalDays;
+
+            // Update the result fields with the calculated profits
+            $('#daily_res').text('$' + dailyProfit.toFixed(2)); // Show daily profit with 2 decimal places
+            $('#total_res').text('$' + totalProfit.toFixed(2)); // Show total profit with 2 decimal places
+        }
+    });
+</script>
 
 {% endblock content %}

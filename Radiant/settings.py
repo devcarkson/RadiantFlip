@@ -29,9 +29,9 @@ DEBUG = True
 
 # ADMIN_EMAIL = 'decarkson@gmail.com'
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = ['bitekexchange.com/cryptoflow/', 'www.bitekexchange.com/cryptoflow/.com', '127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = ['https://kennylass.com.ng/radiantflip/', 'www.kennylass.com.ng/radiantflip', '127.0.0.1', 'localhost']
 
 ADMIN_EMAILS = ('carksonniit@gmail.com', 'carksond@gmail.com')
 
@@ -52,13 +52,22 @@ INSTALLED_APPS = [
 
 # TRUEHOST EMAIL.BACKEND
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'mail.bitekexchange.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'info@bitekexchange.com'
+# EMAIL_HOST_PASSWORD = '1]Jn!&58XSHC'
+# DEFAULT_FROM_EMAIL = 'info@bitekexchange.com'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.bitekexchange.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'info@bitekexchange.com'
-EMAIL_HOST_PASSWORD = '1]Jn!&58XSHC'
-DEFAULT_FROM_EMAIL = 'info@bitekexchange.com'
+EMAIL_HOST='mail.kennylass.com.ng'
+EMAIL_PORT=465
+EMAIL_USE_SSL=True
+EMAIL_USE_TLS=False
+EMAIL_HOST_USER='info@kennylass.com.ng'
+EMAIL_HOST_PASSWORD='CeroW4xDByI%'
+DEFAULT_FROM_EMAIL='Global Regional Strategy <info@kennylass.com.ng>'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
@@ -70,10 +79,10 @@ DEFAULT_FROM_EMAIL = 'info@bitekexchange.com'
 
 
 JAZZMIN_SETTINGS = {
-    "site_title": "RadiantFlip",
-    "site_header": "RadiantFlip",
-    "welcome_sign": "Welcome to RadiantFlip Dashboard",
-    "site_brand": "RadiantFlip",
+    "site_title": "Global Regional Strategy",
+    "site_header": "Global Regional Strategy",
+    "welcome_sign": "Welcome to Global Regional Strategy Dashboard",
+    "site_brand": "Global Regional Strategy",
     "show_ui_builder": True, 
     "site_logo": "img/favicon-32x32.png",
     "login_logo": "img/logo-white.png",
@@ -115,12 +124,12 @@ JAZZMIN_UI_TWEAKS = {
 
 # SITE_URL = 'https://bitekexchange.com/cryptoflow'  # Change this to your production URL when deploying
 
-SITE_URL = 'http://127.0.0.1:8000/'  # Change this to your production URL when deploying
+SITE_URL = 'kennylass.com.ng/'  # Change this to your production URL when deploying
 
 
 # BASE_URL = 'https://bitekexchange.com/cryptoflow'  # Use the appropriate domain or IP and port
 
-BASE_URL = 'http://127.0.0.1:8000/'  # Use the appropriate domain or IP and port
+BASE_URL = 'kennylass.com.ng/'  # Use the appropriate domain or IP and port
 
 
 MIDDLEWARE = [
@@ -131,7 +140,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware', # To handle admin staticfiles on development env
+    'whitenoise.middleware.WhiteNoiseMiddleware', # To handle admin staticfiles on development env
 
 ]
 
@@ -192,12 +201,12 @@ AUTH_PASSWORD_VALIDATORS = [
     # {
     #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     # },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -216,36 +225,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-
-]
-
-# Cpanel static settings
-
 # MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'itdynrpl/public_html/media/')
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'home/itdynrpl/public_html/static/') 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
-    
+
 # ]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 #To handle admin staticfiles
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
