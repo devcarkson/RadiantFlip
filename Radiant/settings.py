@@ -52,22 +52,23 @@ INSTALLED_APPS = [
 
 # TRUEHOST EMAIL.BACKEND
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'mail.bitekexchange.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'info@bitekexchange.com'
-# EMAIL_HOST_PASSWORD = '1]Jn!&58XSHC'
-# DEFAULT_FROM_EMAIL = 'info@bitekexchange.com'
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='mail.kennylass.com.ng'
+EMAIL_HOST='mail.globalregionalstrategy.com'
 EMAIL_PORT=465
 EMAIL_USE_SSL=True
 EMAIL_USE_TLS=False
-EMAIL_HOST_USER='info@kennylass.com.ng'
-EMAIL_HOST_PASSWORD='CeroW4xDByI%'
-DEFAULT_FROM_EMAIL='Global Regional Strategy <info@kennylass.com.ng>'
+EMAIL_HOST_USER='support@globalregionalstrategy.com'
+EMAIL_HOST_PASSWORD='0K~allluHyO7W$Kp'
+DEFAULT_FROM_EMAIL='Global Regional Strategy <support@globalregionalstrategy.com>'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST='mail.kennylass.com.ng'
+# EMAIL_PORT=465
+# EMAIL_USE_SSL=True
+# EMAIL_USE_TLS=False
+# EMAIL_HOST_USER='info@kennylass.com.ng'
+# EMAIL_HOST_PASSWORD='CeroW4xDByI%'
+# DEFAULT_FROM_EMAIL='Global Regional Strategy <info@kennylass.com.ng>'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
