@@ -23,15 +23,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-s=b-4&55ef)c8#6^^(l6q071+%-!yv-j)x^wogl5swxb5kleae'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ADMIN_EMAILS = 'carksonniit@gmail.com'
 
 # ADMIN_EMAIL = 'decarkson@gmail.com'
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
 
-# ALLOWED_HOSTS = ['https://kennylass.com.ng/radiantflip/', 'www.kennylass.com.ng/radiantflip', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['https://https://globalregionalstrategy.com/', 'www.https://globalregionalstrategy.com/', 'http://127.0.0.1', 'localhost']
 
 ADMIN_EMAILS = ('carksonniit@gmail.com', 'carksond@gmail.com')
 
@@ -79,7 +79,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Global Regional Strategy",
     "show_ui_builder": True, 
     "site_logo": "img/favicon-32x32.png",
-    "login_logo": "img/logo-white.png",
+    "login_logo": "",
     "custom_css": "css/custom_login.css",
     # "login_logo_dark": None,
 }
@@ -118,12 +118,12 @@ JAZZMIN_UI_TWEAKS = {
 
 # SITE_URL = 'https://bitekexchange.com/cryptoflow'  # Change this to your production URL when deploying
 
-SITE_URL = 'kennylass.com.ng/'  # Change this to your production URL when deploying
+SITE_URL = 'https://globalregionalstrategy.com/' # this to your production URL when deploying'
 
 
 # BASE_URL = 'https://bitekexchange.com/cryptoflow'  # Use the appropriate domain or IP and port
 
-BASE_URL = 'kennylass.com.ng/'  # Use the appropriate domain or IP and port
+BASE_URL = 'https://globalregionalstrategy.com/' # appropriate domain or IP and port'
 
 
 MIDDLEWARE = [

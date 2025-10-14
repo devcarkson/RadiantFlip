@@ -24,8 +24,19 @@ pulling latest changes from remote repo
 
 git fetch origin && git reset --hard origin/main
 
+
+
+git stash
+
 git pull --ff-only origin main
 
+git stash pop
+
+git checkout -- db.sqlite3
+
+git add db.sqlite3
+
+git stash drop
 
 
 //////////////////////////////////
