@@ -24,6 +24,9 @@ pulling latest changes from remote repo
 
 git fetch origin && git reset --hard origin/main
 
+git pull --ff-only origin main
+
+
 
 //////////////////////////////////
 #wsgi.py settings

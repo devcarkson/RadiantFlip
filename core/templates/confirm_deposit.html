@@ -85,6 +85,49 @@
 
 </style>
 
+<script>
+function copyWalletAddress() {
+    var addressElement = document.getElementById('wallet_address_text');
+    var address = addressElement ? addressElement.textContent.trim() : "{{ wallet_address }}";
+
+    console.log('Attempting to copy:', address); // Debug log
+
+    // Simple approach: Use execCommand for maximum compatibility
+    var textArea = document.createElement("textarea");
+    textArea.value = address;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        var successful = document.execCommand('copy');
+        console.log('Copy result:', successful); // Debug log
+        if (successful) {
+            showCopySuccess();
+        } else {
+            showCopyError();
+        }
+    } catch (err) {
+        console.error('Copy failed:', err);
+        showCopyError();
+    }
+
+    document.body.removeChild(textArea);
+}
+
+function showCopySuccess() {
+    // Simple alert instead of complex notification
+    alert('Wallet address copied to clipboard!');
+}
+
+function showCopyError() {
+    alert('Failed to copy wallet address. Please select and copy manually.');
+}
+</script>
+
 {% block content %}
 <main id="as-main-deposit" class="uk-section-xsmall">
     <header class="uk-heading uk-text-center uk-margin-small-bottom">
@@ -134,9 +177,7 @@
                         </table>
     
                         <div class="bitcoin_form bitcoin11" id="coinpr_form">
-                            Please send <b>{{ deposit.crypto_amount }} {{ deposit.payment_system }}</b> to <i><a
-                                href="{{ deposit.payment_system }}:{{ wallet_address }}?amount={{ deposit.crypto_amount }}&amp;message=Deposit+to+{{ site_name }}+User+{{ request.user.username }}"
-                                style="text-transform: initial">{{ wallet_address }}</a></i><br>
+                            Please send <b>{{ deposit.crypto_amount }} {{ deposit.payment_system }}</b> to <i><span id="wallet_address_text" onclick="copyWalletAddress()" style="cursor: pointer; text-decoration: underline; color: #ffcc00;">{{ wallet_address }}</span> <br>
                         </div>
                         <div id="placeforstatus">
                             <script language="javascript">
