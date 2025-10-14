@@ -1,1 +1,44 @@
 python manage.py collectstatic
+
+
+
+
+
+
+import os, sys
+
+# Path to your project
+project_home = '/home/cdymzusp/backend'
+if project_home not in sys.path:
+    sys.path.insert(0, project_home)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'core.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+
+//////////////////////////////////////////////////////
+
+pulling latest changes from remote repo
+
+git fetch origin && git reset --hard origin/main
+
+
+//////////////////////////////////
+#wsgi.py settings
+
+import os, sys
+
+# Path to your project
+project_home = '/home/cdymzusp/dictchannels'
+if project_home not in sys.path:
+    sys.path.insert(0, project_home)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'dictchannel.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+
+///////////////////////////////////////////////
