@@ -29,9 +29,9 @@ DEBUG = False
 
 # ADMIN_EMAIL = 'decarkson@gmail.com'
 
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = ['https://https://globalregionalstrategy.com/', 'www.https://globalregionalstrategy.com/', 'http://127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = ['https://https://globalregionalstrategy.com/', 'www.https://globalregionalstrategy.com/', 'http://127.0.0.1', 'localhost']
 
 ADMIN_EMAILS = ('carksonniit@gmail.com', 'carksond@gmail.com')
 
