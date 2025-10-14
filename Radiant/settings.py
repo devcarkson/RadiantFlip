@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-s=b-4&55ef)c8#6^^(l6q071+%-!yv-j)x^wogl5swxb5kleae'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ADMIN_EMAILS = 'carksonniit@gmail.com'
 
@@ -31,7 +31,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-# ALLOWED_HOSTS = ['https://https://globalregionalstrategy.com/', 'www.https://globalregionalstrategy.com/', 'http://127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = ['https://https://globalregionalstrategy.com/', 'www.https://globalregionalstrategy.com/', 'http://127.0.0.1:4000', 'localhost']
 
 ADMIN_EMAILS = ('carksonniit@gmail.com', 'carksond@gmail.com')
 
