@@ -11,9 +11,14 @@
     <link rel="shortcut icon" href="{% static "img/fav.png" %}">
 	<link rel="icon" type="image/png" sizes="32x32" href="{% static "img/favicon-32x32.png" %}">
 	<meta content="ie=edge" http-equiv="x-ua-compatible">
-	<link rel="stylesheet" href="{% static "css/vendor.css" %}">
-	<link rel="stylesheet" href="{% static "css/style.css" %}">
-	<link href="{% static "css/spop.min.css" %}" rel="stylesheet">
+	<link rel="preload" href="{% static 'css/vendor.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<link rel="preload" href="{% static 'css/style.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<link rel="preload" href="{% static 'css/spop.min.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript>
+		<link rel="stylesheet" href="{% static 'css/vendor.css' %}">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+		<link rel="stylesheet" href="{% static 'css/spop.min.css' %}">
+	</noscript>
 </head>
 
 <body>
@@ -247,7 +252,7 @@
 								{% for plan in plans1 %}
 								<div class="invest-plan__item">
 									<div class="plan-item__icon">
-										<img src="{{ STATIC_URL }}img-new/plan{{ forloop.counter }}.svg" alt="" style="height:42px">
+										<img src="{{ STATIC_URL }}img-new/plan{{ forloop.counter }}.svg" alt="Investment plan {{ forloop.counter }} icon" style="height:42px" loading="lazy">
 									</div>
 									<div class="text-white mb-2" style="color:white">{{ plan.name }}</div>
 									<div class="invest-plan__head">
@@ -281,7 +286,7 @@
 								{% for plan in plans2 %}
 								<div class="invest-plan__item">
 									<div class="plan-item__icon">
-										<img src="{{ STATIC_URL }}img-new/plan{{ forloop.counter|add:2 }}.svg" alt="" style="height:42px">
+										<img src="{{ STATIC_URL }}img-new/plan{{ forloop.counter|add:2 }}.svg" alt="Investment plan {{ forloop.counter|add:3 }} icon" style="height:42px" loading="lazy">
 									</div>
 									<div class="text-white mb-2" style="color:white">{{ plan.name }}</div>
 									<div class="invest-plan__head">
@@ -370,11 +375,11 @@
 							<div class="invest-tabs" data-tabs-btns="invest">
 								<div class="invest-tabs__item">
 									<p>stable</p><span>profitability</span>
-									<img src="{% static "img/stable-profit.svg" %}" alt="">
+									<img src="{% static 'img/stable-profit.svg' %}" alt="Stable profitability icon" loading="lazy">
 								</div>
 								<div class="invest-tabs__item">
 									<p>Fast</p><span>withdrawals</span>
-									<img src="{% static "img/instant-withdraw.svg" %}" alt="">
+									<img src="{% static 'img/instant-withdraw.svg' %}" alt="Fast withdrawals icon" loading="lazy">
 								</div>
 							</div>
 						</div>
@@ -383,7 +388,7 @@
 			</div>
 		</section>
 
-		<section class="refs">
+		<section class="refs" aria-labelledby="about-heading">
 			<div class="container">
 				<div class="main-title main-title_right">
 					<div class="main-title__top"><span>About</span></div>
@@ -393,22 +398,23 @@
 				<div class="row">
 					<div class="col-xl-6 col-lg-8 offset-xl-0 offset-lg-2 order-3 order-xl-2">
 						<div class="about-img">
-							<img src="{% static "img/about.gif" %}" alt="about-img">
+							<img src="{% static 'img/about.gif' %}" alt="Global Regional Strategy - Professional Trading Platform" loading="lazy" width="600" height="400">
 						</div>
 					</div>
 					<div class="col-xl-6 col-sm-6 order-1">
-						<div class="refs-arrow"> <img src="{% static "img/refs-arrow.svg" %}" alt="refs-arrow" />
+						<div class="refs-arrow">
+							<img src="{% static 'img/refs-arrow.svg' %}" alt="Decorative arrow" role="presentation" />
 						</div>
 						<div class="main-text">
-							<h2>ABOUT US</h2>
+							<h2 id="about-heading">ABOUT US</h2>
 							<p>We Have 10+ Years Of Experience In Standard Professional Services</p>
 							<p>We do so by providing an intuitive trading platform designed with the latest technological advancements that's geared towards new traders as well as professionals. We place great emphasis on education, providing a well-rounded library of V.O.D. seminars, webinars, good signals, analysis and more.</p>
 							<p>Our customer service and support is always available to meet your needs, and our account managers know that your success is our success.</p>
 							<h3>OPENING HOURS</h3>
 							<p>Mon - Fri 9:00 - 21:00</p>
 							<h3>HELPLINE</h3>
-							<p>+14104290588</p>
-							<a class="main-btn main-btn_orange" href="{% url 'about' %}">READ MORE</a>
+							<p><a href="tel:+14104290588" aria-label="Call our customer service helpline">+14104290588</a></p>
+							<a class="main-btn main-btn_orange" href="{% url 'about' %}" aria-label="Read more about Global Regional Strategy">READ MORE</a>
 						</div>
 					</div>
 				</div>
@@ -509,20 +515,20 @@
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-4 col-6">
-						<div class="partners-item"> <img src="{% static "img/partners-9.png" %}" alt="Gemini" />
-						</div>
+						<div class="partners-item"> <img src="{% static 'img/partners-9.png' %}" alt="Gemini cryptocurrency exchange partner" loading="lazy" />
+							</div>
 					</div>
 					<div class="col-lg-3 col-md-4 col-6">
-						<div class="partners-item"> <img src="{% static "img/partners-1.png" %}" alt="partners-1" />
-						</div>
+						<div class="partners-item"> <img src="{% static 'img/partners-1.png' %}" alt="Cryptocurrency exchange partner" loading="lazy" />
+							</div>
 					</div>
 					<div class="col-lg-3 col-md-4 col-6">
-						<div class="partners-item"> <img src="{% static "img/partners-2.svg" %}" alt="partners-2" />
-						</div>
+						<div class="partners-item"> <img src="{% static 'img/partners-2.svg' %}" alt="Blockchain technology partner" loading="lazy" />
+							</div>
 					</div>
 					<div class="col-lg-3 col-md-4 col-6">
-						<div class="partners-item"> <img src="{% static "img/partners-3.svg" %}" alt="partners-3" />
-						</div>
+						<div class="partners-item"> <img src="{% static 'img/partners-3.svg' %}" alt="Financial services partner" loading="lazy" />
+							</div>
 					</div>
 					<div class="col-lg-3 col-md-4 col-6">
 						<div class="partners-item"> <img src="{% static "img/partners-4.svg" %}" alt="partners-4" />
@@ -719,25 +725,34 @@
 	<script src="{% static "js/nicescroll.min.js" %}"></script>
 
 	<script>
-		$(document).ready(function () {
+		document.addEventListener('DOMContentLoaded', function() {
 			// Define the minimum and maximum investment amounts
 			var minAmount = 300;
 			var maxAmount = 1000000;
 
+			// Get DOM elements once for better performance
+			var calPlan = document.getElementById('cal_plan');
+			var calAmount = document.getElementById('cal_amount');
+			var dailyRes = document.getElementById('daily_res');
+			var totalRes = document.getElementById('total_res');
+
 			// Listen for changes in the plan or amount fields
-			$('#cal_plan, #cal_amount').on('change keyup', function () {
+			function handleInputChange() {
 				calculateProfits();
-			});
+			}
+
+			calPlan.addEventListener('change', handleInputChange);
+			calAmount.addEventListener('input', handleInputChange); // Use input instead of keyup for better performance
 
 			function calculateProfits() {
 				// Get the selected plan and amount
-				var plan = $('#cal_plan').val();
-				var amount = parseFloat($('#cal_amount').val());
+				var plan = calPlan.value;
+				var amount = parseFloat(calAmount.value);
 
 				// Validate the amount
 				if (isNaN(amount) || amount < minAmount || amount > maxAmount) {
-					$('#daily_res').text('$0');
-					$('#total_res').text('$0');
+					dailyRes.textContent = '$0';
+					totalRes.textContent = '$0';
 					return;
 				}
 
@@ -753,8 +768,8 @@
 				var totalProfit = dailyProfit * totalDays;
 
 				// Update the result fields with the calculated profits
-				$('#daily_res').text('$' + dailyProfit.toFixed(2)); // Show daily profit with 2 decimal places
-				$('#total_res').text('$' + totalProfit.toFixed(2)); // Show total profit with 2 decimal places
+				dailyRes.textContent = '$' + dailyProfit.toFixed(2); // Show daily profit with 2 decimal places
+				totalRes.textContent = '$' + totalProfit.toFixed(2); // Show total profit with 2 decimal places
 			}
 		});
 	</script>
@@ -762,28 +777,48 @@
 
 	<script src="{% static "js/spop.min.js" %}"></script>
 
-	<script type="text/javascript">
-		var country_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Chad", "Chile", "China", "Colombia", "Congo", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Gibraltar", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", , "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen"];
-		var name_list = ["Linda", "Bush", "Joe", "mark", "Noah", "Emma", "Liam", "Sophia", "Jacob", "Olivia", "Mason", "Isabella", "William", "Ava", "Ethan", "Mia", "Michael", "Abigail", "Alexander", "Emily", "James", "Madison", "Elijah", "Charlotte", "Daniel", "Elizabeth", "Benjamin", "Amelia", "Aiden", "Chloe", "Jayden", "Ella", "Logan", "Evelyn", "Matthew", "Avery", "David", "Sofia", "Joseph", "Harper", "Lucas", "Grace", "Jackson", "Addison", "Anthony", "Victoria", "Joshua", "Natalie", "Samuel", "Lily", "Andrew", "Aubrey", "Gabriel", "Lillian", "Christopher", "Zoey", "John", "Hannah", "Dylan", "Layla", "Carter", "Brooklyn", "Isaac", "Samantha", "Ryan", "Zoe", "Luke", "Leah", "Oliver", "Scarlett", "Nathan", "Riley", "Henry", "Camila", "Owen", "Savannah", "Caleb", "Anna", "Wyatt", "Audrey", "Christian", "Allison", "Sebastian", "Aria"];
-		function choice(array) {
-			return array[Math.floor(Math.random() * array.length)];
-		}
-		function randomNumber(min, max) {
-			return Math.random() * (max - min) + min;
-		}
-		function payinout() {
-			var nu = Math.floor(randomNumber(500, 10500));
-			var nam = choice(name_list);
-			var con = choice(country_list);
-			var mode = choice(['deposited', 'withdrew', 'reinvested', 'invested']);
-			spop({
-				template: nam + " from " + con + " " + mode + " $" + nu + " ...",
-				position: 'top-center',
-				style: 'success',
-				autoclose: 10000,
+	<script>
+		// Optimized notification system with reduced frequency and better performance
+		(function() {
+			var country_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Chad", "Chile", "China", "Colombia", "Congo", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Gibraltar", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen"];
+			var name_list = ["Linda", "Bush", "Joe", "mark", "Noah", "Emma", "Liam", "Sophia", "Jacob", "Olivia", "Mason", "Isabella", "William", "Ava", "Ethan", "Mia", "Michael", "Abigail", "Alexander", "Emily", "James", "Madison", "Elijah", "Charlotte", "Daniel", "Elizabeth", "Benjamin", "Amelia", "Aiden", "Chloe", "Jayden", "Ella", "Logan", "Evelyn", "Matthew", "Avery", "David", "Sofia", "Joseph", "Harper", "Lucas", "Grace", "Jackson", "Addison", "Anthony", "Victoria", "Joshua", "Natalie", "Samuel", "Lily", "Andrew", "Aubrey", "Gabriel", "Lillian", "Christopher", "Zoey", "John", "Hannah", "Dylan", "Layla", "Carter", "Brooklyn", "Isaac", "Samantha", "Ryan", "Zoe", "Luke", "Leah", "Oliver", "Scarlett", "Nathan", "Riley", "Henry", "Camila", "Owen", "Savannah", "Caleb", "Anna", "Wyatt", "Audrey", "Christian", "Allison", "Sebastian", "Aria"];
+
+			function choice(array) {
+				return array[Math.floor(Math.random() * array.length)];
+			}
+
+			function randomNumber(min, max) {
+				return Math.random() * (max - min) + min;
+			}
+
+			function payinout() {
+				// Only run if page is visible to save resources
+				if (document.hidden) return;
+
+				var nu = Math.floor(randomNumber(500, 10500));
+				var nam = choice(name_list);
+				var con = choice(country_list);
+				var mode = choice(['deposited', 'withdrew', 'reinvested', 'invested']);
+
+				// Use native DOM methods for better performance
+				if (typeof spop !== 'undefined') {
+					spop({
+						template: nam + " from " + con + " " + mode + " $" + nu + " ...",
+						position: 'top-center',
+						style: 'success',
+						autoclose: 10000,
+					});
+				}
+			}
+
+			// Reduced frequency from 24s to 45s for better performance
+			var intervalId = setInterval(payinout, 45000);
+
+			// Clean up interval when page is unloaded
+			window.addEventListener('beforeunload', function() {
+				clearInterval(intervalId);
 			});
-		}
-		setInterval(payinout, 24000);
+		})();
 	</script>
 	<!--footer section end-->
 
@@ -1032,21 +1067,27 @@
 		});
 	</script>
 
-	<!-- Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'GA_MEASUREMENT_ID', {
-			'anonymize_ip': true,
-			'allow_google_signals': false,
-			'allow_ad_features': false
-		});
-	</script>
-
 	<!-- Google Search Console Verification -->
 	<meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
+
+	<!-- Google Analytics -->
+	<script>
+		(function() {
+			var script = document.createElement('script');
+			script.async = true;
+			script.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
+			document.head.appendChild(script);
+
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'GA_MEASUREMENT_ID', {
+				'anonymize_ip': true,
+				'allow_google_signals': false,
+				'allow_ad_features': false
+			});
+		})();
+	</script>
 
 </body>
 
