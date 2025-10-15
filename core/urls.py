@@ -3,6 +3,8 @@ from . import views
 from . views import *
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
+from django.http import HttpResponse
 from .sitemaps import StaticViewSitemap
 
 urlpatterns = [
@@ -43,7 +45,7 @@ urlpatterns = [
     path('reset/done/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),  # Custom complete view
 
     # Sitemap
-    path('sitemap.xml', sitemap, {'sitemaps': {'static': StaticViewSitemap}}, name='django.contrib.sitemaps.views.sitemap'),
+    path('sitemap.xml', views.sitemap_view, name='sitemap'),
 ]
 
 
