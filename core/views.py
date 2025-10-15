@@ -114,6 +114,10 @@ def terms(request):
     context ={}
     return render(request, 'indexa972.html', context)
 
+def about(request):
+    context ={}
+    return render(request, 'about.html', context)
+
 # def contact(request):
 #     context ={}
 #     return render(request, 'index15a0.html', context)

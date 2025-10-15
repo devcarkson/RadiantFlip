@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Block access to admin areas
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /api/
+
+# Block access to sensitive files
+Disallow: /static/
+Disallow: /media/
+Disallow: /*.txt$
+Disallow: /*.log$
+
+# Allow access to sitemap
+Sitemap: https://globalregionalstrategy.com/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1

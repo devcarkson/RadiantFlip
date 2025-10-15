@@ -38,6 +38,17 @@
                                             </svg>
                                         </div>
                                     </a>
+                                    <a class="header-menu__item" href="{% url "about" %}">
+                                        <span>
+                                            <i style="font-style: normal;">About Us
+                                            </i>
+                                        </span>about
+                                        <div class="header-menu__icon">
+                                            <svg>
+                                                <use xlink:href="static/img/sprite.svg#arrow"></use>
+                                            </svg>
+                                        </div>
+                                    </a>
                                     <a class="header-menu__item" href="{% url "faq" %}">
                                         <span>
                                             <i style="font-style: normal;">FAQ
@@ -107,6 +118,28 @@
 												<i style="font-style: normal;">Home
 												</i>
 											</span>main
+											<div class="header-menu__icon">
+												<svg>
+													<use xlink:href="static/img/sprite.svg#arrow"></use>
+												</svg>
+											</div>
+										</a>
+										<a class="header-menu__item" href="{% url "about" %}">
+										    <span>
+										        <i style="font-style: normal;">About Us
+										        </i>
+										    </span>about
+										    <div class="header-menu__icon">
+										        <svg>
+										            <use xlink:href="static/img/sprite.svg#arrow"></use>
+										        </svg>
+										    </div>
+										</a>
+										<a class="header-menu__item" href="{% url "about" %}">
+											<span>
+												<i style="font-style: normal;">About Us
+												</i>
+											</span>about
 											<div class="header-menu__icon">
 												<svg>
 													<use xlink:href="static/img/sprite.svg#arrow"></use>
@@ -354,42 +387,28 @@
 			<div class="container">
 				<div class="main-title main-title_right">
 					<div class="main-title__top"><span>About</span></div>
-					<div class="main-title__text">Company
+					<div class="main-title__text">Us
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-xl-3 col-sm-6 order-1">
-						<div class="refs-arrow"> <img src="{% static "img/refs-arrow.svg" %}" alt="refs-arrow" />
-						</div>
-						<div class="main-text">
-							<p>At Global Regional Strategy, we are committed to transforming cryptocurrency staking into a
-								straightforward and rewarding experience for everyone. Our platform provides a
-								user-friendly, secure, and efficient way for individuals to stake their digital static
-								and earn rewards. By integrating cutting-edge technology with a focus on simplicity and
-								security, we cater to both seasoned crypto investors and newcomers. Transparency,
-								reliability, and continuous innovation are at the heart of our operations, ensuring that
-								you can stake with confidence and maximize your crypto potential.</p>
-						</div>
-					</div>
 					<div class="col-xl-6 col-lg-8 offset-xl-0 offset-lg-2 order-3 order-xl-2">
 						<div class="about-img">
 							<img src="{% static "img/about.gif" %}" alt="about-img">
 						</div>
 					</div>
-					<div class="col-xl-3 col-sm-6 order-2 order-xl-3">
-						<div class="refs-right">
-							<div class="refs-arrow"> <img src="{% static "img/refs-arrow.svg" %}" alt="refs-arrow" />
-							</div>
-							<div class="refs-img mt-3"> <img src="{% static "img/about-right.svg" %}" alt="about-right"
-									width="172" />
-							</div>
-							<div class="main-text">
-								<p>At Global Regional Strategy, our vision is to democratize access to crypto staking and enable
-									individuals globally to actively participate in the blockchain revolution. We
-									believe in a future where staking is a mainstream, accessible tool for wealth
-									generation, contributing to the security and decentralization of blockchain
-									networks.</p>
-							</div>
+					<div class="col-xl-6 col-sm-6 order-1">
+						<div class="refs-arrow"> <img src="{% static "img/refs-arrow.svg" %}" alt="refs-arrow" />
+						</div>
+						<div class="main-text">
+							<h2>ABOUT US</h2>
+							<p>We Have 10+ Years Of Experience In Standard Professional Services</p>
+							<p>We do so by providing an intuitive trading platform designed with the latest technological advancements that's geared towards new traders as well as professionals. We place great emphasis on education, providing a well-rounded library of V.O.D. seminars, webinars, good signals, analysis and more.</p>
+							<p>Our customer service and support is always available to meet your needs, and our account managers know that your success is our success.</p>
+							<h3>OPENING HOURS</h3>
+							<p>Mon - Fri 9:00 - 21:00</p>
+							<h3>HELPLINE</h3>
+							<p>+14104290588</p>
+							<a class="main-btn main-btn_orange" href="{% url 'about' %}">READ MORE</a>
 						</div>
 					</div>
 				</div>
@@ -1012,6 +1031,22 @@
 			window.addEventListener('scroll', animateOnScroll);
 		});
 	</script>
+
+	<!-- Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'GA_MEASUREMENT_ID', {
+			'anonymize_ip': true,
+			'allow_google_signals': false,
+			'allow_ad_features': false
+		});
+	</script>
+
+	<!-- Google Search Console Verification -->
+	<meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
 
 </body>
 

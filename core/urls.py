@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from . views import *
 from django.contrib.auth import views as auth_views
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import StaticViewSitemap
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -10,6 +12,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('faq/', views.faq, name='faq'),
     path('terms/', views.terms, name='terms'),
+    path('about/', views.about, name='about'),
     path('login/', login_view, name='login'),
     path('signup/', views.signup, name='signup'),
     path('logout/', views.logout_view, name='logout'),
@@ -38,7 +41,9 @@ urlpatterns = [
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),  # Done notification
     path('reset/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),  # Custom password reset confirm view
     path('reset/done/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),  # Custom complete view
-     
+
+    # Sitemap
+    path('sitemap.xml', sitemap, {'sitemaps': {'static': StaticViewSitemap}}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 

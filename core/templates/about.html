@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% get_static_prefix as STATIC_URL %}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<meta name="description" content="Learn about Global Regional Strategy - 10+ years of experience in professional trading services. Advanced platform with education, signals, and 24/7 support." />
+	<meta name="keywords" content="trading platform, cryptocurrency, financial services, education, signals, analysis, customer support" />
+	<meta name="author" content="Global Regional Strategy" />
+	<meta name="robots" content="index, follow" />
+	<meta property="og:title" content="About Us - Global Regional Strategy" />
+	<meta property="og:description" content="Learn about our 10+ years of experience in professional trading services and commitment to your success." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{% url 'about' %}" />
+	<meta property="og:image" content="{% static 'img/logo-white.png' %}" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="About Us - Global Regional Strategy" />
+	<meta name="twitter:description" content="Learn about our 10+ years of experience in professional trading services." />
+	<meta name="twitter:image" content="{% static 'img/logo-white.png' %}" />
+	<link rel="canonical" href="{% url 'about' %}" />
+	<link rel="shortcut icon" href="{% static 'img/fav.png' %}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+	<meta content="ie=edge" http-equiv="x-ua-compatible">
+	<link rel="preload" href="{% static 'css/vendor.css' %}" as="style">
+	<link rel="preload" href="{% static 'css/style.css' %}" as="style">
+	<link rel="preload" href="{% static 'img/about.gif' %}" as="image">
+	<link rel="stylesheet" href="{% static 'css/vendor.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link href="{% static 'css/spop.min.css' %}" rel="stylesheet">
+	<title>About Us - Global Regional Strategy</title>
+</head>
+
+<body>
+	<a href="#main-content" class="skip-link">Skip to main content</a>
+	<div class="wrapper">
+		<header class="header">
+			<div class="header-top">
+				<div class="container">
+					<div class="row d-flex align-items-center">
+						<div class="col-lg-3 col-md-5 col-7"><a class="header-logo" href="{% url "index" %}"><img
+									src="{% static "img/logo-white.png" %}" height="38" alt="logo" /></a></div>
+						<div class="col-lg-9 col-md-7 col-5">
+							<div class="header-nav">
+								<div class="header-menu d-none d-lg-flex flex-column flex-lg-row">
+                                    <a class="header-menu__item border-0" href="{% url "index" %}">
+                                        <span>
+                                            <i style="font-style: normal;">Home
+                                            </i>
+                                        </span>main
+                                        <div class="header-menu__icon">
+                                            <svg>
+                                                <use xlink:href="static/img/sprite.svg#arrow"></use>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                    <a class="header-menu__item" href="{% url "about" %}">
+                                        <span>
+                                            <i style="font-style: normal;">About Us
+                                            </i>
+                                        </span>about
+                                        <div class="header-menu__icon">
+                                            <svg>
+                                                <use xlink:href="static/img/sprite.svg#arrow"></use>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                    <a class="header-menu__item" href="{% url "faq" %}">
+                                        <span>
+                                            <i style="font-style: normal;">FAQ
+                                            </i>
+                                        </span>answers
+                                        <div class="header-menu__icon">
+                                            <svg>
+                                                <use xlink:href="static/img/sprite.svg#arrow"></use>
+                                            </svg>
+                                        </div>
+                                    </a>
+
+                                    <a class="header-menu__item" href="{% url "terms" %}">
+                                        <span>
+                                            <i style="font-style: normal;">Terms
+                                            </i>
+                                        </span>rules
+                                        <div class="header-menu__icon">
+                                            <svg>
+                                                <use xlink:href="static/img/sprite.svg#arrow"></use>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                    <a class="header-menu__item mr-4" href="{% url "contact" %}">
+                                        <span>
+                                            <i style="font-style: normal;">Contacts
+                                            </i>
+                                        </span>Support
+                                        <div class="header-menu__icon">
+                                            <svg>
+                                                <use xlink:href="static/img/sprite.svg#arrow"></use>
+                                            </svg>
+                                        </div>
+                                    </a>
+								</div>
+								<div class="header-btns mt-4">
+									{% if user.is_authenticated %}
+										{% comment %} <p>Hello, {{ user.username }}!<span> {% endcomment %}
+											<a class="main-btn main-btn_line" href="{% url 'account' %}">
+												<img src="{% static 'img/btn-login.svg' %}" alt="btn-login" />dashboard
+											</a>
+										</span></p>
+									{% else %}
+										<a class="main-btn main-btn_line" href="{% url 'login' %}">
+											<img src="{% static 'img/btn-login.svg' %}" alt="btn-login" />login
+										</a>
+										<a class="main-btn main-btn_orange main-btn_sign" href="{% url 'signup' %}">
+											<img src="{% static 'img/btn-sign.svg' %}" alt="btn-sign" />register
+										</a>
+									{% endif %}
+								</div>
+								<div class="header-burger"> <span></span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 d-lg-none">
+						<div class="header-side">
+							<div class="nicescroll-box">
+								<div class="wrap">
+									<div class="header-menu">
+										<a class="header-menu__item" href="{% url "index" %}">
+											<span>
+												<i style="font-style: normal;">Home
+												</i>
+											</span>main
+											<div class="header-menu__icon">
+												<svg>
+													<use xlink:href="static/img/sprite.svg#arrow"></use>
+												</svg>
+											</div>
+										</a>
+										<a class="header-menu__item" href="{% url "about" %}">
+											<span>
+												<i style="font-style: normal;">About Us
+												</i>
+											</span>about
+											<div class="header-menu__icon">
+												<svg>
+													<use xlink:href="static/img/sprite.svg#arrow"></use>
+												</svg>
+											</div>
+										</a>
+										<a class="header-menu__item" href="{% url "faq" %}">
+											<span>
+												<i style="font-style: normal;">FAQ
+												</i>
+											</span>answers
+											<div class="header-menu__icon">
+												<svg>
+													<use xlink:href="static/img/sprite.svg#arrow"></use>
+												</svg>
+											</div>
+										</a>
+
+										<a class="header-menu__item" href="{% url "terms" %}">
+											<span>
+												<i style="font-style: normal;">Terms
+												</i>
+											</span>rules
+											<div class="header-menu__icon">
+												<svg>
+													<use xlink:href="static/img/sprite.svg#arrow"></use>
+												</svg>
+											</div>
+										</a>
+										<a class="header-menu__item" href="{% url "contact" %}">
+											<span>
+												<i style="font-style: normal;">Contacts
+												</i>
+											</span>Support
+											<div class="header-menu__icon">
+												<svg>
+													<use xlink:href="static/img/sprite.svg#arrow"></use>
+												</svg>
+											</div>
+										</a>
+									</div>
+									<div class="header-btns mt-4">
+										{% if user.is_authenticated %}
+											{% comment %} <p>Hello, {{ user.username }}!<span> {% endcomment %}
+												<a class="main-btn main-btn_line" href="{% url 'account' %}">
+													<img src="{% static 'img/btn-login.svg' %}" alt="btn-login" />dashboard
+												</a>
+											</span></p>
+										{% else %}
+											<a class="main-btn main-btn_line" href="{% url 'login' %}">
+												<img src="{% static 'img/btn-login.svg' %}" alt="btn-login" />login
+											</a>
+											<a class="main-btn main-btn_orange main-btn_sign" href="{% url 'signup' %}">
+												<img src="{% static 'img/btn-sign.svg' %}" alt="btn-sign" />register
+											</a>
+										{% endif %}
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-10">
+						<div class="header-content">
+							<div class="header-scene">
+								<div class="header-scene__item"><img src="{% static "img/coin-bnb.png" %}" width="80"
+										alt="coin-bnb" />
+								</div>
+								<div class="header-scene__item"><img src="{% static "img/coin-btc.png" %}" width="100"
+										alt="coin-btc" />
+								</div>
+								<div class="header-scene__item"><img src="{% static "img/coin-eth.png" %}" width="90"
+										alt="coin-eth" />
+								</div>
+								<div class="header-scene__item"><img src="{% static "img/coin-ltc.webp" %}" width="70"
+										alt="coin-ltc" />
+								</div>
+							</div>
+							<h1 class="header-title">About Us</h1>
+							<div class="header-text">
+								<p>Learn more about Global Regional Strategy and our commitment to your success. We provide an intuitive trading platform designed with the latest technological advancements for both new traders and professionals.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<main id="main-content">
+		<!-- Breadcrumb Navigation -->
+		<nav aria-label="breadcrumb" class="breadcrumb-nav">
+			<div class="container">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+					<li class="breadcrumb-item active" aria-current="page">About Us</li>
+				</ol>
+			</div>
+		</nav>
+
+		<section class="refs">
+			<div class="container">
+				<div class="main-title main-title_right">
+					<div class="main-title__top"><span>About</span></div>
+					<div class="main-title__text">Us
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-6 col-lg-8 offset-xl-0 offset-lg-2 order-3 order-xl-2">
+						<div class="about-img">
+						<img src="{% static "img/about.gif" %}" alt="Global Regional Strategy - About Us" loading="lazy" width="600" height="400">
+					</div>
+					</div>
+					<div class="col-xl-6 col-sm-6 order-1">
+						<div class="refs-arrow"> <img src="{% static "img/refs-arrow.svg" %}" alt="refs-arrow" />
+						</div>
+						<div class="main-text">
+							<h2>ABOUT US</h2>
+							<p>We Have 10+ Years Of Experience In Standard Professional Services</p>
+							<p>We do so by providing an intuitive trading platform designed with the latest technological advancements that's geared towards new traders as well as professionals. We place great emphasis on education, providing a well-rounded library of V.O.D. seminars, webinars, good signals, analysis and more.</p>
+							<p>Our customer service and support is always available to meet your needs, and our account managers know that your success is our success.</p>
+							<h3>OPENING HOURS</h3>
+							<p>Mon - Fri 9:00 - 21:00</p>
+							<h3>HELPLINE</h3>
+							<p><a href="tel:+14104290588" aria-label="Call our helpline">+14104290588</a></p>
+
+							<!-- Internal Links -->
+							<p>Learn more about our <a href="{% url 'faq' %}">frequently asked questions</a> or <a href="{% url 'contact' %}">contact our support team</a>.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		</main>
+
+		<section class="why">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 order-1">
+						<div class="main-title main-title_sm">
+							<div class="main-title__top"><span>Our Mission</span></div>
+							<div class="main-title__text">Empowering Traders Worldwide</p>
+							</div>
+						</div>
+						<div class="why-text">
+							<p>At Global Regional Strategy, our mission is to democratize access to advanced trading tools and educational resources. We believe that everyone should have the opportunity to participate in the financial markets with confidence and knowledge.</p>
+							<p><b><i>Our platform combines cutting-edge technology with comprehensive education to create an environment where both novice and experienced traders can thrive.</i></b></p>
+						</div>
+					</div>
+					<div class="col-lg-4 col-sm-6 order-lg-2 order-3">
+						<div class="why-box-bot">
+							<div class="why-text">
+								<h3><span>Why Choose Us?</span></h3>
+								<ul>
+									<li><b>✓ 10+ Years of Experience</b></li>
+									<li><b>✓ Advanced Trading Platform</b></li>
+									<li><b>✓ Comprehensive Education</b></li>
+									<li><b>✓ 24/7 Customer Support</b></li>
+									<li><b>✓ Secure & Reliable</b></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6 order-lg-3 order-2">
+						<div class="why-box-top">
+							<div class="why-list">
+								<div class="why-list__item" data-num="01">
+									<h3>EDUCATION</h3>
+									<p>Access to V.O.D. seminars, webinars, and market analysis.</p>
+								</div>
+								<div class="why-list__item" data-num="02">
+									<h3>TECHNOLOGY</h3>
+									<p>Latest technological advancements in trading platforms.</p>
+								</div>
+								<div class="why-list__item" data-num="03">
+									<h3>SUPPORT</h3>
+									<p>Dedicated customer service and account management.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 offset-lg-12">
+						<div class="footer-wallets py-4 py-lg-5">
+							<div class="swiper-button-prev">
+								<svg>
+									<use xlink:href="{% static "img/sprite.svg#arrow" %}"></use>
+								</svg>
+							</div>
+							<div class="swiper-button-next">
+								<svg>
+									<use xlink:href="{% static "img/sprite.svg#arrow" %}"></use>
+								</svg>
+							</div>
+							<div class="swiper">
+								<div class="swiper-wrapper">
+
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/btc-white.svg" %}"
+												alt="btc-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/eth-white.svg" %}"
+												alt="eth-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/bch-white.svg" %}"
+												alt="xrp-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/ltc-white.svg" %}"
+												alt="ltc-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/sol-white.svg" %}"
+												alt="dash-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/doge-white.svg" %}"
+												alt="doge-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/trx-white.svg" %}"
+												alt="trx-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/usdt-white.svg" %}"
+												alt="usdt-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/bnb-white.svg" %}"
+												alt="bnb-white" />
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="footer-wallets__item"> <img src="{% static "img/xlm-white.svg" %}"
+												alt="epc-white" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-3 order-2 order-lg-1">
+						<div class="footer-bg"> <a class="footer-logo" href="{% url "index" %}"><img
+									src="{% static "img/logo-white.png" %}" alt="logo-white" /></a>
+							<div class="footer-text">
+								<p><strong class="footer-text__warning">Risk Warning:</strong> The performance of most
+									cryptostatic can be highly volatile, with their value dropping as quickly as it can
+									rise. You should be prepared to lose all the money you invest in cryptostatic. The
+									cryptoasset market is largely unregulated.</p>
+							</div>
+							<div class="footer-copy">Copyright © 2025 Global Regional Strategy. All rights reserved</div>
+						</div>
+					</div>
+					<div class="col-lg-9 order-1 oreder-lg-2">
+						<div class="footer-bot">
+							<div class="row">
+								<div class="col-lg-4">
+									<div class="footer-title mt-0 mb-4">information</div>
+									<div class="footer-menu">
+										<a href="{% url "faq" %}">FAQs</a>
+										<a href="{% url "terms" %}">Terms</a>
+										<a href="{% url "contact" %}">Support</a>
+									</div>
+								</div>
+								<div class="col-lg-4 col-sm-6 mt-4 mt-lg-0">
+									<div class="footer-text">
+										<h3> <img src="{% static "img/f_ddos.svg" %}" width="42" alt="ddos" />DDOS Protection
+										</h3>
+										<p>Our website is protected by the most effective and modern
+											technologies in the field of countering DDoS attacks of any
+											etymology.</p>
+									</div>
+								</div>
+								<div class="col-lg-4 col-sm-6">
+									<div class="footer-text">
+										<h3> <img src="{% static "img/f_ssl.svg" %}" width="42" alt="ssl" />SSL Protection
+										</h3>
+										<p>Reliable SSL encryption to preserve a privacy of personal data and
+											the process of information exchange on our website.</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<div class="row">
+										<div class="col-sm-7">
+											<div class="footer-contacts mb-4 mb-lg-0"> <a href="javascript:void(0)">
+													<img src="{% static "img/footer-contacts-1.svg" %}"
+														alt="footer-contacts-1" />167-169
+													Wilshire Blvd, Los Angeles, CA 90017, United States</a><a
+													href="javascript:void(0)"> <img
+														src="{% static "img/footer-contacts-2.svg" %}"
+														alt="footer-contacts-2" />support@globalregionalstrategy.com</a></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+    <!-- Js files -->
+ <script src="{% static 'js/vendor.js' %}" defer></script>
+ <script src="{% static 'js/main.js' %}" defer></script>
+ <script src="{% static 'js/nicescroll.min.js' %}" defer></script>
+ <script src="{% static 'js/spop.min.js' %}" defer></script>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "Global Regional Strategy",
+		"description": "Professional trading platform with 10+ years of experience providing advanced trading tools, education, and customer support.",
+		"url": "{% url 'index' %}",
+		"logo": "{% static 'img/logo-white.png' %}",
+		"contactPoint": {
+			"@type": "ContactPoint",
+			"telephone": "+14104290588",
+			"contactType": "customer service",
+			"hoursAvailable": "Mo-Fr 09:00-21:00"
+		},
+		"sameAs": [
+			"https://t.me/"
+		],
+		"foundingDate": "2014",
+		"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "167-169 Wilshire Blvd",
+			"addressLocality": "Los Angeles",
+			"addressRegion": "CA",
+			"postalCode": "90017",
+			"addressCountry": "US"
+		}
+	}
+	</script>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "What experience does Global Regional Strategy have?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "We have 10+ years of experience in standard professional services, providing intuitive trading platforms with the latest technological advancements."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What educational resources do you provide?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "We provide a comprehensive library of V.O.D. seminars, webinars, trading signals, and market analysis to support both new and professional traders."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What are your opening hours?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Our customer service is available Monday through Friday from 9:00 AM to 9:00 PM."
+				}
+			}
+		]
+	}
+	</script>
+
+	<script type="text/javascript">
+		// Optimized notification script with reduced frequency for better performance
+		var country_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Chad", "Chile", "China", "Colombia", "Congo", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Gibraltar", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre & Miquelon", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen"];
+		var name_list = ["Linda", "Bush", "Joe", "mark", "Noah", "Emma", "Liam", "Sophia", "Jacob", "Olivia", "Mason", "Isabella", "William", "Ava", "Ethan", "Mia", "Michael", "Abigail", "Alexander", "Emily", "James", "Madison", "Elijah", "Charlotte", "Daniel", "Elizabeth", "Benjamin", "Amelia", "Aiden", "Chloe", "Jayden", "Ella", "Logan", "Evelyn", "Matthew", "Avery", "David", "Sofia", "Joseph", "Harper", "Lucas", "Grace", "Jackson", "Addison", "Anthony", "Victoria", "Joshua", "Natalie", "Samuel", "Lily", "Andrew", "Aubrey", "Gabriel", "Lillian", "Christopher", "Zoey", "John", "Hannah", "Dylan", "Layla", "Carter", "Brooklyn", "Isaac", "Samantha", "Ryan", "Zoe", "Luke", "Leah", "Oliver", "Scarlett", "Nathan", "Riley", "Henry", "Camila", "Owen", "Savannah", "Caleb", "Anna", "Wyatt", "Audrey", "Christian", "Allison", "Sebastian", "Aria"];
+
+		function choice(array) {
+			return array[Math.floor(Math.random() * array.length)];
+		}
+
+		function randomNumber(min, max) {
+			return Math.random() * (max - min) + min;
+		}
+
+		function payinout() {
+			if (document.hidden) return; // Don't run when page is not visible
+			var nu = Math.floor(randomNumber(500, 10500));
+			var nam = choice(name_list);
+			var con = choice(country_list);
+			var mode = choice(['deposited', 'withdrew', 'reinvested', 'invested']);
+			spop({
+				template: nam + " from " + con + " " + mode + " $" + nu + " ...",
+				position: 'top-center',
+				style: 'success',
+				autoclose: 10000,
+			});
+		}
+
+		// Reduced frequency and added visibility check for better performance
+		setInterval(payinout, 30000); // Changed from 24000 to 30000ms
+	</script>
+	<!--footer section end-->
+
+	<div class="gtranslate_wrapper"></div>
+
+
+	<style>
+		/* Google Translate Widget Styles */
+		.gt_float_switcher {
+			border-radius: 5px;
+			background: #d7d7d7;
+		}
+
+		.gt_float_switcher .gt-selected {
+			background-color: #fff;
+		}
+
+		.gt_float_switcher .gt-selected .gt-current-lang span.gt-lang-code {
+			font-family: "roboto slab", sans-serif;
+		}
+
+		.nturl {
+			font-size: 0;
+			color: transparent;
+		}
+
+		.nturl img {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.gt-lang-code {
+			font-size: 18px;
+		}
+
+		/* Performance optimized animations with reduced motion support */
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+			}
+		}
+
+		/* Global Animations */
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			animation: fadeIn 1s ease-in;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		/* Header Animations */
+		.header-title {
+			animation: slideInUp 1.2s ease-out;
+		}
+
+		.header-text {
+			animation: slideInUp 1.4s ease-out;
+		}
+
+		.main-btn {
+			transition: all 0.3s ease;
+		}
+
+		.main-btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+		}
+
+		/* About Section Animations */
+		.about-img {
+			animation: zoomIn 1.5s ease-out;
+		}
+
+		@keyframes zoomIn {
+			from { transform: scale(0.8); opacity: 0; }
+			to { transform: scale(1); opacity: 1; }
+		}
+
+		.main-text {
+			animation: slideInRight 1.3s ease-out;
+		}
+
+		@keyframes slideInRight {
+			from {
+				opacity: 0;
+				transform: translateX(50px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		/* Why Section Animations */
+		.why-box-top .why-list__item {
+			opacity: 0;
+			animation: fadeInUp 0.8s ease-out forwards;
+		}
+
+		.why-list__item:nth-child(1) { animation-delay: 0.2s; }
+		.why-list__item:nth-child(2) { animation-delay: 0.4s; }
+		.why-list__item:nth-child(3) { animation-delay: 0.6s; }
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.why-rate__item {
+			transition: transform 0.3s ease;
+		}
+
+		.why-rate__item:hover {
+			transform: scale(1.05);
+		}
+
+		/* Footer Animations */
+		.footer-wallets__item {
+			transition: transform 0.3s ease;
+		}
+
+		.footer-wallets__item:hover {
+			transform: rotateY(180deg);
+		}
+
+		.footer-text h3 {
+			animation: pulse 2s infinite;
+		}
+
+		@keyframes pulse {
+			0% { transform: scale(1); }
+			50% { transform: scale(1.05); }
+			100% { transform: scale(1); }
+		}
+
+		/* Accessibility improvements */
+		.sr-only {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border: 0;
+		}
+
+		/* Focus styles for better keyboard navigation */
+		a:focus, button:focus {
+			outline: 2px solid #007bff;
+			outline-offset: 2px;
+		}
+
+		/* Skip link for screen readers */
+		.skip-link {
+			position: absolute;
+			top: -40px;
+			left: 6px;
+			background: #000;
+			color: #fff;
+			padding: 8px;
+			text-decoration: none;
+			z-index: 100;
+		}
+
+		.skip-link:focus {
+			top: 6px;
+		}
+
+		/* Breadcrumb Navigation Styles */
+		.breadcrumb-nav {
+			background-color: #f8f9fa;
+			padding: 1rem 0;
+			margin-bottom: 2rem;
+		}
+
+		.breadcrumb {
+			background: transparent;
+			margin: 0;
+			padding: 0;
+		}
+
+		.breadcrumb-item a {
+			color: #007bff;
+			text-decoration: none;
+		}
+
+		.breadcrumb-item a:hover {
+			text-decoration: underline;
+		}
+
+		.breadcrumb-item.active {
+			color: #6c757d;
+		}
+	</style>
+	<script>window.gtranslateSettings = { "default_language": "en", "native_language_names": true, "languages": ["en", "ru", "fr", "de", "it", "es", "uk", "tr"], "wrapper_selector": ".gtranslate_wrapper", "float_switcher_open_direction": "right" }</script>
+
+	<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
+</body>
+
+</html>
