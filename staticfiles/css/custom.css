@@ -1,0 +1,42 @@
+.pagi {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    list-style: none;
+    display: flex;
+}
+
+.pagination .page-item .page-link {
+    padding: 5px 8px;
+    border-radius: 3px;
+    border: 1px solid #ffcc00;
+    text-decoration: none;
+    margin: 0 3px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+}
+
+.table tr th {
+    color: #ffcc00;
+}
+
+.table tr td {
+    padding: 5px 10px;
+    font-size: 90%;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+}
+
+.table-with tr th {
+    white-space: nowrap;
+}
