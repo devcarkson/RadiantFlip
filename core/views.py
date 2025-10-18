@@ -231,7 +231,7 @@ def contact(request):
             send_mail(
                 admin_email_subject,
                 plain_message,
-                'Global Regional Strategy <support@globalregionalstrategy.com>',  # Use your desired sender name and email
+                'Global Regional Strategy <noreply@globalregionalstrategy.com>',  # Use your desired sender name and email
                 list(settings.ADMIN_EMAILS),
                 html_message=html_message,
                 fail_silently=False,
@@ -300,7 +300,7 @@ def signup(request):
             email = EmailMultiAlternatives(
                 subject=mail_subject,
                 body="Please use an email client that supports HTML to view this email.",
-                from_email='Global Regional Strategy <support@globalregionalstrategy.com>',
+                from_email='Global Regional Strategy <noreply@globalregionalstrategy.com>',
                 to=[user.email],
             )
             email.attach_alternative(html_message, "text/html")
@@ -331,7 +331,7 @@ def signup(request):
             send_mail(
                 admin_email_subject,
                 plain_message,
-                'Global Regional Strategy <support@globalregionalstrategy.com>',
+                'Global Regional Strategy <noreply@globalregionalstrategy.com>',
                 list(settings.ADMIN_EMAILS),
                 html_message=html_message,
                 fail_silently=False,
@@ -457,7 +457,7 @@ def forgottenpassword(request):
                 send_mail(
                     subject,
                     message="This is a plain text fallback message.",
-                    from_email='Global Regional Strategy <support@globalregionalstrategy.com>',
+                    from_email='Global Regional Strategy <noreply@globalregionalstrategy.com>',
                     recipient_list=[user.email],
                     html_message=email_message,
                     fail_silently=False

@@ -24,17 +24,17 @@ import os
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-s=b-4&55ef)c8#6^^(l6q071+%-!yv-j)x^wogl5swxb5kleae')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
 
 # ADMIN_EMAILS = 'carksonniit@gmail.com'
 
 # ADMIN_EMAIL = 'decarkson@gmail.com'
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'globalregionalstrategy.com,www.globalregionalstrategy.com,127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = ['*']
 
 # ALLOWED_HOSTS = ['https://https://globalregionalstrategy.com/', 'www.https://globalregionalstrategy.com/', 'http://127.0.0.1:4000', 'localhost']
 
-ADMIN_EMAILS = ('lesliecoffman009@outlook.com', 'carksond@gmail.com')
+ADMIN_EMAILS = ('carksonniit@gmail.com', 'carksond@gmail.com')
 
 
 # Application definition
@@ -53,20 +53,29 @@ INSTALLED_APPS = [
 
 # TRUEHOST EMAIL.BACKEND
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST='nomatstartechltd.com'
+# EMAIL_PORT=465
+# EMAIL_USE_SSL=True
+# EMAIL_USE_TLS=False
+# EMAIL_HOST_USER='noreply@nomatstartechltd.com'
+# EMAIL_HOST_PASSWORD='oT-d}#91V}8qdmMN'
+# DEFAULT_FROM_EMAIL='Global Regional Strategy <noreply@nomatstartechltd.com>'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'nomatstartechltd.com')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 465))
-EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', 'True').lower() == 'true'
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'False').lower() == 'true'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'noreply@nomatstartechltd.com')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'oT-d}#91V}8qdmMN')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Global Regional Strategy <noreply@nomatstartechltd.com>')
+EMAIL_HOST='globalregionalstrategy.com'
+EMAIL_PORT=465
+EMAIL_USE_SSL=True
+EMAIL_USE_TLS=False
+EMAIL_HOST_USER='noreply@globalregionalstrategy.com'
+EMAIL_HOST_PASSWORD='%QfGM*&fK!u$4FL9'
+DEFAULT_FROM_EMAIL='Global Regional Strategy <noreply@globalregionalstrategy.com>'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST='mail.globalregionalstrategy.com'
 # EMAIL_PORT=587
 # EMAIL_USE_SSL=True
-# # EMAIL_USE_TLS=True
+# EMAIL_USE_TLS=False
 # EMAIL_HOST_USER='support@globalregionalstrategy.com'
 # EMAIL_HOST_PASSWORD='0K~allluHyO7W$Kp'
 # DEFAULT_FROM_EMAIL='Global Regional Strategy <support@globalregionalstrategy.com>'
