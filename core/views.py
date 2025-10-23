@@ -304,7 +304,7 @@ def signup(request):
                 to=[user.email],
             )
             email.attach_alternative(html_message, "text/html")
-            email.send()
+            email.send(fail_silently=True)  # Prevent blocking on email failures
 
             # Notify admin about new user registration
             admin_email_subject = 'New User Registration at Global Regional Strategy'
@@ -334,7 +334,7 @@ def signup(request):
                 'Global Regional Strategy <noreply@globalregionalstrategy.com>',
                 list(settings.ADMIN_EMAILS),
                 html_message=html_message,
-                fail_silently=False,
+                fail_silently=True,  # Non-blocking for better performance
             )
 
 
@@ -460,7 +460,7 @@ def forgottenpassword(request):
                     from_email='Global Regional Strategy <noreply@globalregionalstrategy.com>',
                     recipient_list=[user.email],
                     html_message=email_message,
-                    fail_silently=False
+                    fail_silently=True  # Non-blocking for better performance
                 )
             messages.success(request, 'A password reset email has been sent to your email address.')
             return redirect('login')
@@ -717,7 +717,7 @@ def confirm_deposit(request):
             from_email=formatted_from_email,
             recipient_list=admin_emails,
             html_message=html_message,
-            fail_silently=False,
+            fail_silently=True,  # Non-blocking for better performance
         )
 
         # Send notification email to user about pending deposit
@@ -765,7 +765,7 @@ def confirm_deposit(request):
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[request.user.email],
             html_message=user_html_message,
-            fail_silently=False,
+            fail_silently=True,  # Non-blocking for better performance
         )
 
         # Clear session after saving deposit

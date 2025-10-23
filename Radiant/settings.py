@@ -24,7 +24,7 @@ import os
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-s=b-4&55ef)c8#6^^(l6q071+%-!yv-j)x^wogl5swxb5kleae')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
 
 # ADMIN_EMAILS = 'carksonniit@gmail.com'
 
@@ -54,40 +54,30 @@ INSTALLED_APPS = [
 # TRUEHOST EMAIL.BACKEND
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST='nomatstartechltd.com'
+# EMAIL_HOST='globalregionalstrategy.com'
 # EMAIL_PORT=465
 # EMAIL_USE_SSL=True
 # EMAIL_USE_TLS=False
-# EMAIL_HOST_USER='noreply@nomatstartechltd.com'
-# EMAIL_HOST_PASSWORD='oT-d}#91V}8qdmMN'
-# DEFAULT_FROM_EMAIL='Global Regional Strategy <noreply@nomatstartechltd.com>'
+# EMAIL_HOST_USER='noreply@globalregionalstrategy.com'
+# EMAIL_HOST_PASSWORD='%QfGM*&fK!u$4FL9'
+# DEFAULT_FROM_EMAIL='Global Regional Strategy <noreply@globalregionalstrategy.com>'
 
+# # Email performance optimizations
+# EMAIL_TIMEOUT = 5  # Reduced timeout for faster connections
+
+# Gmail SMTP Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='globalregionalstrategy.com'
-EMAIL_PORT=465
-EMAIL_USE_SSL=True
-EMAIL_USE_TLS=False
-EMAIL_HOST_USER='noreply@globalregionalstrategy.com'
-EMAIL_HOST_PASSWORD='%QfGM*&fK!u$4FL9'
-DEFAULT_FROM_EMAIL='Global Regional Strategy <noreply@globalregionalstrategy.com>'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'janetadmob@gmail.com'  
+EMAIL_HOST_PASSWORD = 'nzrz kkwm kyxt vbre'  
+DEFAULT_FROM_EMAIL='Global Regional Strategy <janetadmob@gmail.com>'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST='mail.globalregionalstrategy.com'
-# EMAIL_PORT=587
-# EMAIL_USE_SSL=True
-# EMAIL_USE_TLS=False
-# EMAIL_HOST_USER='support@globalregionalstrategy.com'
-# EMAIL_HOST_PASSWORD='0K~allluHyO7W$Kp'
-# DEFAULT_FROM_EMAIL='Global Regional Strategy <support@globalregionalstrategy.com>'
+# Email performance optimizations
+EMAIL_TIMEOUT = 5  # Reduced timeout for faster connections
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST='mail.kennylass.com.ng'
-# EMAIL_PORT=465
-# EMAIL_USE_SSL=True
-# EMAIL_USE_TLS=False
-# EMAIL_HOST_USER='info@kennylass.com.ng'
-# EMAIL_HOST_PASSWORD='CeroW4xDByI%'
-# DEFAULT_FROM_EMAIL='Global Regional Strategy <info@kennylass.com.ng>'
 
 
 
