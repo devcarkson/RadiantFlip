@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import UserProfile
 from .models import Contact
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 class UserProfileRegistrationForm(UserCreationForm):
     fullname = forms.CharField(max_length=100)
@@ -22,6 +24,10 @@ class UserProfileRegistrationForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
+        try:
+            validate_email(email)
+        except ValidationError:
+            raise forms.ValidationError("Enter a valid email address.")
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("A user with that email address already exists.")
         return email

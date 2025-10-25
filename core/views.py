@@ -1314,3 +1314,9 @@ def stake(request):
         'plan_durations': json.dumps(plan_durations)
     }
     return render(request, 'invest.html', context)
+
+
+#         Admin Login
+# ==============================
+# username: Admin@globalregionalstrategy.com
+# password: MvX#@2%iSW$$uTq+#T9-28Q|q
